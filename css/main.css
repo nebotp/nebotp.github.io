@@ -4361,7 +4361,7 @@ table {
 
 body {
 	width: 100%;
-	*zoom: 1
+	zoom: 1
 }
 
 body:before,
@@ -5855,7 +5855,7 @@ hr {
 	max-width: 100%;
 	margin: 0 auto;
 	border-radius: 3px;
-	text-align: center
+	text-align: center;
     cursor: zoom-in;
 }
 
