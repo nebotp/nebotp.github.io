@@ -143,11 +143,12 @@
 
 <p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code>, aunque realmente solo encontramos 2 puertos abiertos, el <code class="language-plaintext highlighter-rouge">9999</code> y el <code class="language-plaintext highlighter-rouge">10000</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ nmap </span><span class="p">10.10.27.47
-Nmap scan report for 10.10.27.47
+<code><span class="ve">❯ nmap </span><span class="p">10.10.0.164
+Nmap scan report for 10.10.0.164
 PORT      STATE    SERVICE
-9999/tcp  open     abyss
-10000/tcp open     snet-sensor-mgmt  </span>
+22/tcp    closed   ssh
+80/tcp    open     http  
+443/tcp   open     https </span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Al conectarnos con al puerto <code class="language-plaintext highlighter-rouge">9999</code> vemos programa que nos pide una <code class="language-plaintext highlighter-rouge">contraseña</code></p>
