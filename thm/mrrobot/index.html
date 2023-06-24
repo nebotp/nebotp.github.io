@@ -198,9 +198,11 @@ ya que suele estar en todas las páginas webs y en el se especifican directorios
 <section class="post" id="bf">
 <br><h3 class="post-title">Brute Force con Hydra</h3><br>
 
-<p class="plain-text">Si lo miramos desde el navegador podemos ver que tenemos capacidad de listar recursos, este directorio nos comparte un archivo llamado <code class="language-plaintext highlighter-rouge">brainpan.exe</code></p>
-<a href="/thm/brainpan/2.png" target="_blank"><div><p><img src="/thm/brainpan/2.png"></p></div></a>
-
+<p class="plain-text">Ahora vamos a volver de nuevo al directorio <code class="language-plaintext highlighter-rouge">/wp-login.php</code> probamos diferentes usuarios y contraseñas comunes para ver si hay suerte como <code class="language-plaintext highlighter-rouge">admin:admin</code> 
+pero nada, lo que si podemos apreciar es que Wordpress nos muestra un mensaje de error cuando introducimos un usuario que no existe.</p>
+<a href="/thm/mrrobot/6.png" target="_blank"><div><p><img src="/thm/mrrobot/6.png"></p></div></a>
+<p class="plain-text">Esto es algo que podemos aprovechar mediante el uso de la herramienta <code class="language-plaintext highlighter-rouge">Hydra</code> con ella podremos 
+realizar un ataque de fuerza bruta haciendo que vaya descartando nombres de usuarios cada vez que se de el mensaje de error esperado.</p>
 <p class="plain-text">Como es un archivo <code class="language-plaintext highlighter-rouge">exe</code> podemos pasarlo a una máquina <code class="language-plaintext highlighter-rouge">windows</code> y ejecutarlo, al hacerlo solo nos dice que se pone en espera de conexiones por el puerto <code class="language-plaintext highlighter-rouge">9999</code> </p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="p">PS C:\Users\pc1\Desktop> </span><span class="am">.\brainpan.exe  </span><span class="p">
