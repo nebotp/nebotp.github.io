@@ -147,7 +147,7 @@
 puerto <code class="language-plaintext highlighter-rouge">443</code> un servicio <code class="language-plaintext highlighter-rouge">https</code></p>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ nmap </span><span class="p"> 10.10.0.164
+<code><span class="ve">❯ nmap</span><span class="p"> 10.10.0.164
 Nmap scan report for 10.10.0.164
 PORT      STATE    SERVICE
 22/tcp    closed   ssh
@@ -160,7 +160,7 @@ nuevos ficheros y directorios existentes.</p>
 <br>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">> dirb</span><span class="p">http://10.10.0.164
+<code><span class="ve">> dirb</span><span class="p"> http://10.10.0.164
 ---- Scanning URL: http://10.10.0.164/ ----
 ==> DIRECTORY: http://10.10.0.164/0/
 ==> DIRECTORY: http://10.10.0.164/admin/
@@ -179,21 +179,18 @@ nuevos ficheros y directorios existentes.</p>
 <p class="plain-text">Al acceder a este directorio se nos descarga un archivo con formato .atom, en el, sólo encontramos el código de la página Wordpress aunque nos da algo de información útil como la versión de este: <code class="language-plaintext highlighter-rouge">4.3.1</code></p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 
-<br><h3>Directorio atom</h3><br>
+<br><h3>Directorio login</h3><br>
+<a href="/thm/mrrobot/3.png" target="_blank"><div><p><img src="/thm/mrrobot/3.png"></p></div></a>
+<p class="plain-text">Se nos redirige automáticamente al directorio <code class="language-plaintext highlighter-rouge">"/wp-login.php"</code>, este nos será de gran ayuda para poder acceder a la administración de la web si conseguimos las credenciales necesarias.</p>
 
-<code><span class="ve">❯ wfuzz </span><span class="p">-c -w /usr/share/seclists/Discovery/Web-Content/common.txt -u http://10.10.27.47:10000/FUZZ -t 100 --hc 404  
-********************************************************
-* Wfuzz 3.1.0 - The Web Fuzzer                         *
-********************************************************
-
-Target: http://10.10.27.47:10000/FUZZ
-Total requests: 4713
-
-=====================================================================
-ID           Response   Lines    Word       Chars       Payload
-=====================================================================
-
-000000854:   </span><span class="az">301</span><span class="p">        0 L      0 W        0 Ch        "bin"</span>
+<br><h3>Directorio robots</h3><br>
+<a href="/thm/mrrobot/4.png" target="_blank"><div><p><img src="/thm/mrrobot/4.png"></p></div></a>
+<p class="plain-text">Una vez cargado el directorio este nos muestra el contenido del archivo <code class="language-plaintext highlighter-rouge">robots.txt</code>, realmente este archivo lo tendríamos que comprobar siempre, independientemente de si una herramienta de análisis nos lo muestra
+ya que suele estar en todas las páginas webs y en el se especifican directorios y archivos que no se desean indexar.</p>
+<p class="plain-text">¡Sorpresa! Parece que hemos encontrado la primera key además de lo que parece ser un diccionario que contiene valores que podrían actuar como nombres de usuario y/o contraseñas.</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">10.10.0.164/key-1-of-3.txt </span><span class="am">
+073403c8a58a1f80d943455fb30724b9</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Si lo miramos desde el navegador podemos ver que tenemos capacidad de listar recursos, este directorio nos comparte un archivo llamado <code class="language-plaintext highlighter-rouge">brainpan.exe</code></p>
