@@ -224,18 +224,23 @@ realizar un ataque de fuerza bruta haciendo que vaya descartando nombres de usua
 <p class="plain-text">Vamos a probar las credenciales <code class="language-plaintext highlighter-rouge">Elliot:ER28-0652</code> en el login y accederemos al panel de control Wordpress de la página web.</p>
 <a href="/thm/mrrobot/9.png" target="_blank"><div><p><img src="/thm/mrrobot/9.png"></p></div></a>
 
-<p class="plain-text">Antes de seguir me gustaría hacer un pequeño paréntesis para explicar las diferentes opciones usadas anteriormente al lanzar los comandos con la herramienta <code class="language-plaintext highlighter-rouge">Hydra</code><br>
---> <p style="color:green;">-l</p> Para utilizar un nombre de usuario estático<br>
---> <p style="color:green;">-L</p> Para pasarle un diccionario al programa para que lo recorra probando usuarios<br>
---> <p style="color:green;">-p</p> Para utilizar una contraseña estática<br>
---> <p style="color:green;">-P</p> Para pasarle un diccionario al programa para que lo recorra probando contraseñas<br>
---> <p style="color:green;">^USER^</p> Especificamos en que parte de la cabecera el programa tendrá que meter los nombres de usuario a probar<br>
---> <p style="color:green;">^PWD^</p> Especificamos en que parte de la cabecera el programa tendrá que meter las contraseñas a probar</p>
+<p class="plain-text">Antes de seguir me gustaría hacer un pequeño paréntesis para explicar las diferentes opciones usadas anteriormente al lanzar los comandos con la herramienta <code class="language-plaintext highlighter-rouge">Hydra</code></p>
+<p>
+--> <span style="color:green;">-l</span> Para utilizar un nombre de usuario estático <br>
+--> <span style="color:green;">-L</span> Para pasarle un diccionario al programa para que lo recorra probando usuarios <br>
+--> <span style="color:green;">-p</span> Para utilizar una contraseña estática <br>
+--> <span style="color:green;">-P</span> Para pasarle un diccionario al programa para que lo recorra probando contraseñas <br>
+--> <span style="color:green;">^USER^</span> Especificamos en que parte de la cabecera el programa tendrá que meter los nombres de usuario a probar <br>
+--> <span style="color:green;">^PWD^</span> Especificamos en que parte de la cabecera el programa tendrá que meter las contraseñas a probar
+</p>
+
 
 <section class="post" id="rshell">
 <br><h3 class="post-title">Reverse Shell en PHP</h3><br>
 
-<p class="plain-text">Después de hacer un barrido general por el menú de Wordpress, lo que más llama la atención es que tenemos accesso al editor de código con el que podríamos inyectar código a la web para vulnerarla.</p>
+<p class="plain-text">Después de hacer un barrido general por el menú de Wordpress, lo que más llama la atención es que tenemos accesso al editor de código con el que podríamos inyectar código a la web para vulnerarla.
+Al tener accesso a todos los plugins podemos intentar spawnear una <code class="language-plaintext highlighter-rouge">reverse shell </code>a través de la inyección de código malicioso en un plugin que use php.
+</p>
 
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
