@@ -220,8 +220,8 @@ realizar un ataque de fuerza bruta haciendo que vaya descartando nombres de usua
 <span class="plain-text">[<span class="ve">80</span>][<span class="ve">http-post-form</span>] host: <span class="ve">10.10.0.164</span>  login: <span class="ve">Elliot</span>  password: <span class="ve">ER28-0652</span></span>
 </code></pre></div></div><br>
 
-<p class="plain-text">Ya que esta corriendo en la máquina victima analizemos el ejecutable con <code class="language-plaintext highlighter-rouge">ghidra</code>, donde vemos la función <code class="language-plaintext highlighter-rouge">_main</code> y haciendo clic en ella vemos su código <code class="language-plaintext highlighter-rouge">c</code></p>
-<a href="/thm/brainpan/3.png" target="_blank"><div><p><img src="/thm/brainpan/3.png"></p></div></a>
+<p class="plain-text">Vamos a probar las credenciales <code class="language-plaintext highlighter-rouge">Elliot:ER28-0652</code> en el login y accederemos al panel de control Wordpress de la página web.</p>
+<a href="/thm/mrrobot/9.png" target="_blank"><div><p><img src="/thm/mrrobot/9.png"></p></div></a>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="c1">/* WARNING: Removing unreachable block (ram,0x311716c5) */
 
