@@ -144,7 +144,7 @@
 <p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code></p>
 <p class="plain-text">Lo primero que vemos es que el puerto <code class="language-plaintext highlighter-rouge">22</code> tiene el servicio <code class="language-plaintext highlighter-rouge">ssh</code> pero está cerrado.</p>
 <p class="plain-text">También podemos observar que en el puerto <code class="language-plaintext highlighter-rouge">80</code> hay un servicio <code class="language-plaintext highlighter-rouge">http</code> y en el
-puerto <code class="language-plaintext highlighter-rouge">443</code> un servicio <code class="language-plaintext highlighter-rouge">https</code>.</p>
+puerto <code class="language-plaintext highlighter-rouge">443</code> un servicio <code class="language-plaintext highlighter-rouge">https</code></p>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">❯ nmap </span><span class="p">10.10.0.164
@@ -155,29 +155,19 @@ PORT      STATE    SERVICE
 443/tcp   open     https </span>
 </code></pre></div></div><br>
 
+<p class="plain-text">Una vez que hemos comprovado que existe una página web vamos a utilizar la herramienta <code class="language-plaintext highlighter-rouge">dirb</code> para ver si encontramos nuevos directorios</p>
+<br>
+
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ netcat </span><span class="p">10.10.27.47 9999
-_|                            _|                                        
-_|_|_|    _|  _|_|    _|_|_|      _|_|_|    _|_|_|      _|_|_|  _|_|_|  
-_|    _|  _|_|      _|    _|  _|  _|    _|  _|    _|  _|    _|  _|    _|
-_|    _|  _|        _|    _|  _|  _|    _|  _|    _|  _|    _|  _|    _|
-_|_|_|    _|          _|_|_|  _|  _|    _|  _|_|_|      _|_|_|  _|    _|
-                                            _|                          
-                                            _|
-
-[________________________ WELCOME TO BRAINPAN _________________________]  
-                          ENTER THE PASSWORD                              
-
-                          >></span>
-</code></pre></div></div><br>
-
-<p class="plain-text">Si enviamos una contraseña incorrecta nos devuelve <code class="language-plaintext highlighter-rouge">ACCESS DENIED</code> y termina</p>
-<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="p">[________________________ WELCOME TO BRAINPAN _________________________]  
-                          ENTER THE PASSWORD                            
-
-                          >> 1234
-                          ACCESS DENIED</span>
+<code><span class="ve">> dirb</span><span class="p">http://10.10.0.164
+---- Scanning URL: http://10.10.0.164/ ----
+==> DIRECTORY: http://10.10.0.164/0/
+==> DIRECTORY: http://10.10.0.164/admin/
+==> DIRECTORY: http://10.10.0.164/dashboard
+==> DIRECTORY: http://10.10.0.164/login
+==> DIRECTORY: http://10.10.0.164/robots
+==> DIRECTORY: http://10.10.0.164/video
+==> DIRECTORY: http://10.10.0.164/license </span>
 </code></pre></div></div><br>
 
 <p class="plain-text">El puerto <code class="language-plaintext highlighter-rouge">10000</code> corre un servicio <code class="language-plaintext highlighter-rouge">http</code>, que en el index tiene solo una imagen que nos habla de vulnerabilidades comunes y tal, pero no nos aporta demasiado</p>
