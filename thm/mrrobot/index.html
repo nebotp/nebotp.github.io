@@ -294,8 +294,16 @@ robot@linux:~$ cat key-2-of-3.txt
 <br><h3 class="post-title">Escalada de privilegios</h3><br>
 
 <p class="plain-text">Después de un rato registrando diferentes directorios del sistema no hemos podido encontrar más pistas, así que vamos a intentar hacer una <code class="language-plaintext highlighter-rouge">escalada de privilegios</code> para ver si desde el usuario root podemos encontrar algo.
-Para ello lo que haremos será buscar todos los archivos que tengan el <code class="language-plaintext highlighter-rouge">bit SUID</code> activado, lo que quiere decir que pueden ser ejecutados como si fueras el dueño (root en este caso)</p>
+Para ello lo que haremos será buscar todos los archivos que tengan el <code class="language-plaintext highlighter-rouge">bit SUID</code> activado, el bit de setuid, cuando se establece, permite que el archivo (usualmente un programa ejecutable) se ejecute con los permisos del propietario del archivo en lugar de los permisos del usuario que lo ejecuta. 
+Esto puede ser un problema de seguridad si el archivo pertenece al usuario root.</p>
+<p class="plain-text">Para ello utilizaremos el siguiente comando <code class="language-plaintext highlighter-rouge">find / -perm -u=s -type f 2>/dev/null</code> este se utiliza comúnmente en la fase de exploración de una evaluación de seguridad, para identificar programas que podrían ser explotados para escalar privilegios.
 
+
+
+
+
+
+</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="p">local_414 </span><span class="o">=</span><span class="p"> _get_reply(local_3fc);  </span>
 </code></pre></div></div><br>
