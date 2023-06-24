@@ -6979,3 +6979,19 @@ pre.highlight code,
 .zoomable:hover {
   transform: scale(1.2);
 }
+
+#enumeration {
+    color: white;
+}
+
+#bf {
+    color: white;
+}
+
+#rshell {
+    color: white;
+}
+
+#espriv {
+    color: white;
+}
