@@ -126,7 +126,7 @@
         <li><a href="#enumeration">Enumeración</a></li>
         <li><a href="#bf">Brute Force con Hydra</a></li>
         <li><a href="#rshell">Reverse Shell en PHP</a></li>
-        <li><a href="#shell-puck">Shell - puck</a></li>
+        <li><a href="#espriv">Escalada de privilegios</a></li>
         <li><a href="#shell-anansi">Shell - anansi</a></li>
         <li><a href="#shell-root">Shell - root</a></li>
       </ul>
@@ -292,7 +292,8 @@ robot@linux:~$ cat key-2-of-3.txt
 <span class="ve">822c73956184f694993bede3eb39f959</span>
 </code></pre></div></div><br>
 
-
+<section class="post" id="espriv">
+<br><h3 class="post-title">Escalada de privilegios</h3><br>
 
 
 <p class="plain-text">La función <code class="language-plaintext highlighter-rouge">_main</code> hace un par de validaciones, inicializa el <code class="language-plaintext highlighter-rouge">socket</code> y lo mas destacable es que llama a la función <code class="language-plaintext highlighter-rouge">_get_reply</code> pasandole el input del usuario</p>
