@@ -270,6 +270,24 @@ $python -c 'import pty; pty.spawn("/bin/bash")'
 daemon@linux:/opt/bitnami/apps/wordpress/htdocs/wp-admin$ export TERM=screen-256color
 </code></pre></div></div><br>
 <p class="plain-text">Ahora ya podemos proseguir con la búsqueda, vamos a ver que usuarios hay en el sistema y que podemos encontrar en sus directorios personales.</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+daemon@linux:/etc$ cd /home
+cd /home
+daemon@linux:/home$ ls
+robot
+daemon@linux:/home$ cd robot
+daemon@linux:/home/robot$ ls
+key-2-of-3.txt  password.raw-md5
+</code></pre></div></div><br>
+<p class="plain-text">¡Vaya! Parece que hemos encontrado la key2, el único problema es que para ver el contenido del archivo .txt nos pide una contraseña
+ya que ahora mismo estamos actuando desde el daemon y no tenemos ningún tipo de permisos. Una vez visto el contenido del archivo md5 procederemos a desencriptar el hash
+y a acceder al usuario robot.</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+daemon@linux:/home/robot$ cat password.raw-md5
+robot:c3fcd3d76192e4007dfb496cca67e13b
+</code></pre></div></div><br>
+<a href="/thm/mrrobot/11.png" target="_blank"><div><p><img src="/thm/mrrobot/11.png"></p></div></a>
+
 
 
 
