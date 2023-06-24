@@ -186,7 +186,7 @@ nuevos ficheros y directorios existentes.</p>
 ya que suele estar en todas las páginas webs y en el se especifican directorios y archivos que no se desean indexar.</p>
 <p class="plain-text">¡Sorpresa! Parece que hemos encontrado la primera key además de lo que parece ser un diccionario que contiene valores que podrían actuar como nombres de usuario y/o contraseñas.</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="p">10.10.0.164/key-1-of-3.txt </span><span class="am">
+<code><span class="p">10.10.0.164/key-1-of-3.txt </span><span class="ve">
 073403c8a58a1f80d943455fb30724b9</span>
 </code></pre></div></div><br>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
@@ -259,7 +259,7 @@ daemon
 $
 </code></pre></div></div><br>
 
-<p class="plain-text">Hemos obtenido la reverse shell pero es una shell no interactiva, para poder trabajar en ella
+<p class="plain-text">Hemos obtenido la reverse shell pero es una <code class="language-plaintext highlighter-rouge">shell no interactiva</code> para poder trabajar en ella
 de manera más cómoda y eficiente vamos a proceder a upgradearla con los siguientes comandos:<br>
 python -c 'import pty; pty.spawn("/bin/bash")'<br>
 export TERM=screen-256color</p>
@@ -278,7 +278,7 @@ daemon@linux:/home/robot$ ls
 key-2-of-3.txt  password.raw-md5
 </code></pre></div></div><br>
 <p class="plain-text">¡Vaya! Parece que hemos encontrado la key2, el único problema es que para ver el contenido del archivo .txt nos pide una contraseña
-ya que ahora mismo estamos actuando desde el daemon y no tenemos ningún tipo de permisos. Una vez visto el contenido del archivo md5 procederemos a desencriptar el hash
+ya que ahora mismo estamos actuando desde el daemon y no tenemos ningún tipo de permisos. Una vez visto el contenido del archivo md5 procederemos a <code class="language-plaintext highlighter-rouge">desencriptar el hash</code>
 y a acceder al usuario robot.</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 daemon@linux:/home/robot$ cat password.raw-md5
@@ -293,8 +293,9 @@ robot@linux:~$ cat key-2-of-3.txt
 <section class="post" id="espriv">
 <br><h3 class="post-title">Escalada de privilegios</h3><br>
 
+<p class="plain-text">Después de un rato registrando diferentes directorios del sistema no hemos podido encontrar más pistas, así que vamos a intentar hacer una escalada de privilegios para ver si desde el usuario root podemos encontrar algo.
+Para ello lo que haremos será buscar todos los archivos que tengan el <code class="language-plaintext highlighter-rouge">bit SUID</code> activado, lo que quiere decir que pueden ser ejecutados como si fueras el dueño (root en este caso)</p>
 
-<p class="plain-text">La función <code class="language-plaintext highlighter-rouge">_main</code> hace un par de validaciones, inicializa el <code class="language-plaintext highlighter-rouge">socket</code> y lo mas destacable es que llama a la función <code class="language-plaintext highlighter-rouge">_get_reply</code> pasandole el input del usuario</p>
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="p">local_414 </span><span class="o">=</span><span class="p"> _get_reply(local_3fc);  </span>
 </code></pre></div></div><br>
