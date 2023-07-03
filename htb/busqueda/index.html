@@ -140,7 +140,7 @@
 <br><h3 class="post-title">Enumeración</h3><br>
 
 <p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code></p>
-<p class="plain-text">Lo primero que vemos es que el puerto <code class="language-plaintext highlighter-rouge">22</code> tiene el servicio <code class="language-plaintext highlighter-rouge">ssh</code> pero está cerrado.</p>
+<p class="plain-text">Lo primero que vemos es que el puerto <code class="language-plaintext highlighter-rouge">22</code> tiene el servicio <code class="language-plaintext highlighter-rouge">ssh</code></p>
 <p class="plain-text">También podemos observar que en el puerto <code class="language-plaintext highlighter-rouge">80</code> hay un servicio <code class="language-plaintext highlighter-rouge">http</code></p>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
@@ -154,9 +154,19 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 </span>
 </code></pre></div></div><br>
 
-<p class="plain-text">Una vez que hemos comprovado que existe una página web, vamos a utilizar la herramienta <code class="language-plaintext highlighter-rouge">dirb</code> que nos ayudará a escanearla para descubrir
-nuevos ficheros y directorios existentes.</p>
-<br>
+<p class="plain-text">Al dirigirnos a la web alojada en el puerto 80 vemos que nos redirije a <code class="language-plaintext highlighter-rouge">searcher.htb</code>. Así que vamos lo agregamos al archivo /etc/hosts 
+    para que nos cargue correctamente.</p><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">└─$ sudo nano /etc/hosts</span><code>sS -sV -T4 -v -p-</code><span class="p">
+
+    127.0.0.1       localhost
+    127.0.1.1       htb
+    10.10.11.208    searcher.htb
+    
+        
+</span>
+</code></pre></div></div><br>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">> dirb</span><span class="p"> http://10.10.0.164
