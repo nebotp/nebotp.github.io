@@ -139,9 +139,9 @@
 <section class="post" id="enumeration">
 <br><h3 class="post-title">Enumeración</h3><br>
 
-<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap</code></p>
-<p class="plain-text">Lo primero que vemos es que el puerto <code class="language-plaintext highlighter-rouge">22</code> tiene el servicio <code class="language-plaintext highlighter-rouge">ssh</code></p>
-<p class="plain-text">También podemos observar que en el puerto <code class="language-plaintext highlighter-rouge">80</code> hay un servicio <code class="language-plaintext highlighter-rouge">http</code></p>
+<p class="plain-text">Iniciamos la máquina escaneando los puertos de la máquina con <code class="language-plaintext highlighter-rouge">nmap.</code>
+Podemos ver que únicamente están abiertos los puertos número <code class="language-plaintext highlighter-rouge">22</code> con el servicio <code class="language-plaintext highlighter-rouge">ssh</code>
+y <code class="language-plaintext highlighter-rouge">80</code> con el servicio <code class="language-plaintext highlighter-rouge">http.</code></p>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">❯ nmap</span><code> sS -sV -T4 -v -p-</code><span class="p"> 10.10.11.208
@@ -152,8 +152,8 @@ PORT   STATE SERVICE VERSION
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span>
 </code></pre></div></div><br>
 
-<p class="plain-text">Al dirigirnos a la web alojada en el puerto 80 vemos que nos redirije a <code class="language-plaintext highlighter-rouge">searcher.htb</code>. Así que vamos lo agregamos al archivo /etc/hosts 
-    para que nos cargue correctamente.</p><br>
+<p class="plain-text">Al visitar la dirección IP:80 se nos redirije a <code class="language-plaintext highlighter-rouge">searcher.htb</code>. Así que lo agregamos al archivo /etc/hosts 
+para que nos cargue correctamente.</p><br>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">└─$ sudo nano /etc/hosts</span><span class="p">
@@ -163,6 +163,11 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span>
 </code></pre></div></div><br>
 
 <a href="/htb/busqueda/1.png" target="_blank"><div><p><img src="/htb/busqueda/1.png"></p></div></a>
+
+<p class="plain-text">La funcionalidad de está web es básicamente de búsqueda, dónde se envian 2 parámetros <code class="language-plaintext highlighter-rouge">"query"</code> y
+<code class="language-plaintext highlighter-rouge">"engine"</code>. Inspeccionando un poco más a fondo encontramos en el footer que la web utiliza <code class="language-plaintext highlighter-rouge">Flask y Searchor versión 2.4.0</code></p>
+
+<a href="/htb/busqueda/2.png" target="_blank"><div><p><img src="/htb/busqueda/2.png"></p></div></a>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="ve">> dirb</span><span class="p"> http://10.10.0.164
