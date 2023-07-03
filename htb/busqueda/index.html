@@ -65,7 +65,7 @@
         <div class="navigation-wrapper">
          <nav class="cover-navigation cover-navigation--primary">
             <ul class="navigation">
-              <li class="navigation__item grow"><a href="/thm" title="Pol Nebot Blázquez" class="blog-button">TryHackMe</a></li>
+              <li class="navigation__item grow"><a href="/htb" title="Pol Nebot Blázquez" class="blog-button">HackTheBox</a></li>
             </ul>
           </nav>
 
@@ -144,14 +144,12 @@
 <p class="plain-text">También podemos observar que en el puerto <code class="language-plaintext highlighter-rouge">80</code> hay un servicio <code class="language-plaintext highlighter-rouge">http</code></p>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">❯ nmap</span><code>sS -sV -T4 -v -p-</code><span class="p"> 10.10.11.208
+<code><span class="ve">❯ nmap</span><code> sS -sV -T4 -v -p-</code><span class="p"> 10.10.11.208
 Nmap scan report for 10.10.11.208
 PORT   STATE SERVICE VERSION
 22/tcp open  ssh     OpenSSH 8.9p1 Ubuntu 3ubuntu0.1 (Ubuntu Linux; protocol 2.0)
 80/tcp open  http    Apache httpd 2.4.52
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
-
-</span>
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Al dirigirnos a la web alojada en el puerto 80 vemos que nos redirije a <code class="language-plaintext highlighter-rouge">searcher.htb</code>. Así que vamos lo agregamos al archivo /etc/hosts 
@@ -161,8 +159,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 <code><span class="ve">└─$ sudo nano /etc/hosts</span><span class="p">
 127.0.0.1       localhost
 127.0.1.1       htb
-10.10.11.208    searcher.htb       
-</span>
+10.10.11.208    searcher.htb</span>
 </code></pre></div></div><br>
 
 <a href="/htb/busqueda/1.png" target="_blank"><div><p><img src="/htb/busqueda/1.png"></p></div></a>
