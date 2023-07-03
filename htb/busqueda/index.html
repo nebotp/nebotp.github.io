@@ -169,17 +169,10 @@ para que nos cargue correctamente.</p><br>
 
 <a href="/htb/busqueda/2.png" target="_blank"><div><p><img src="/htb/busqueda/2.png"></p></div></a>
 
-<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="ve">> dirb</span><span class="p"> http://10.10.0.164
----- Scanning URL: http://10.10.0.164/ ----
-==> DIRECTORY: http://10.10.0.164/0/
-==> DIRECTORY: http://10.10.0.164/admin/
-==> DIRECTORY: http://10.10.0.164/dashboard
-==> DIRECTORY: http://10.10.0.164/login
-==> DIRECTORY: http://10.10.0.164/robots
-==> DIRECTORY: http://10.10.0.164/video
-==> DIRECTORY: http://10.10.0.164/license </span>
-</code></pre></div></div><br>
+<p class="plain-text">Hacemos un búsqueda rápida en Google y sin demasiada dificultad encontramos un exploit que parece aprovecharse de una vulnerabilidad de <code class="language-plaintext highlighter-rouge">Searchor 2.4.0</code>,
+situado en el repositorio <a href=https://github.com/nikn0laty/Exploit-for-Searchor-2.4.0-Arbitrary-CMD-Injection>Exploit-for-Searchor-2.4.0-Arbitrary-CMD-Injection</a> del usuario nikn0laty.
+
+<a href="/htb/busqueda/3.png" target="_blank"><div><p><img src="/htb/busqueda/3.png"></p></div></a>
 
 <p class="plain-text">Hemos encontrado varios directorios que parecen interesantes y que nos pueden ayudar a saber por dónde seguir, vamos a inspeccionarlos.
 <br><h3 style="color: white;">Directorio atom</h3><br>
