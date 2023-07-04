@@ -356,10 +356,9 @@ Something went wrong
 "MYSQL_MAJOR=8.0","MYSQL_VERSION=8.0.31-1.el8","MYSQL_SHELL_VERSION=8.0.31-1.el8"],"Cmd":["mysqld"],"Image":"mysql:8","Volumes":{"/var/lib/mysql":{}},"WorkingDir":"","Entrypoint":["docker-entrypoint.sh"],"OnBuild":null,
 "Labels":{"com.docker.compose.config-hash":"1b3f25a702c351e42b82c1867f5761829ada67262ed4ab55276e50538c54792b","com.docker.compose.container-number":"1","com.docker.compose.oneoff":"False","com.docker.compose.project":"docker",
 "com.docker.compose.project.config_files":"docker-compose.yml","com.docker.compose.project.working_dir":"/root/scripts/docker","com.docker.compose.service":"db","com.docker.compose.version":"1.29.2"}}
-
 </code></pre></div></div><br>
 
-<p class="plain-text">¡Voilà! Nos hemos convertido root, ahora tenemos acceso completo al sistema. Lo primero que haremos es acceder a la carpeta root para ver que encontramos dentro.</p>
+<p class="plain-text">Vamos a ir de nuevo a la web Gitea a probar las nuevas credenciales encontradas para logearnos como Administrator y luego iremos a inspeccionar la base de datos de la que tenemos la contraseña root.</p>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 # ls
