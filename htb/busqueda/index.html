@@ -211,8 +211,7 @@ svc@busqueda:~$
 <br><h3 class="post-title">Escalada de privilegios</h3><br>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<code><span class="p">svc@busqueda:~$ ls -lisa</span>
-ls -lisa
+<code><span class="ve">svc@busqueda:~$ ls -lisa</span>
 total 48
 407223 4 drwxr-x--- 7 svc  svc  4096 Jul  3 22:33 .
 393218 4 drwxr-xr-x 3 root root 4096 Dec 22  2022 ..
@@ -230,7 +229,6 @@ total 48
 401437 4 drwx------ 2 svc  svc  4096 Jul  3 22:27 .ssh
 407253 4 -rw-r----- 1 root svc    33 Jul  3 20:24 user.txt
 svc@busqueda:~$ cat .gitconfig
-cat .gitconfig
 [user]
         email = cody@searcher.htb
         name = cody
@@ -243,6 +241,46 @@ svc@busqueda:~$ </span>
 </code></pre></div></div><br>
 
 <p class="plain-text">Encontramos el nombre de usuario "cody" y vamos a inspeccionar el directorio <code class="language-plaintext highlighter-rouge">/var/www/app</code></p>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">svc@busqueda:/var/www/app$ ls -lisa</span>
+ls -lisa
+total 20
+264653 4 drwxr-xr-x 4 www-data www-data 4096 Apr  3 14:32 .
+41701 4 drwxr-xr-x 4 root     root     4096 Apr  4 16:02 ..
+265511 4 -rw-r--r-- 1 www-data www-data 1124 Dec  1  2022 app.py
+327681 4 drwxr-xr-x 8 www-data www-data 4096 Jul  3 20:24 .git
+265516 4 drwxr-xr-x 2 www-data www-data 4096 Dec  1  2022 templates
+svc@busqueda:/var/www/app$ cd .git
+cd .git
+svc@busqueda:/var/www/app/.git$ ls
+ls
+branches
+COMMIT_EDITMSG
+config
+description
+HEAD
+hooks
+index
+info
+logs
+objects
+refs
+svc@busqueda:/var/www/app/.git$ cat config
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        <span class="am">url = http://cody:jh1usoih2bkjaspwe92@gitea.searcher.htb/cody/Searcher_site.git</span>
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+        remote = origin
+        merge = refs/heads/main
+svc@busqueda:/var/www/app/.git$
+</span>
+</code></pre></div></div><br>
 
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
