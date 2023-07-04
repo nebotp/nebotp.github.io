@@ -125,7 +125,7 @@
       <ul>
         <li><a href="#enumeration">Enumeración</a></li>
         <li><a href="#exp">Explotando la vulnerabilidad</a></li>
-        <li><a href="#rshell">Reverse Shell en PHP</a></li>
+        <li><a href="#esc">Escalada de privilegios</a></li>
         <li><a href="#espriv">Escalada de privilegios</a></li>
       </ul>
   </div>
@@ -206,6 +206,44 @@ cat user.txt
 svc@busqueda:~$     
 </span>
 </code></pre></div></div><br>
+
+<section class="post" id="esc">
+<br><h3 class="post-title">Escalada de privilegios</h3><br>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="p">svc@busqueda:~$ ls -lisa</span>
+ls -lisa
+total 48
+407223 4 drwxr-x--- 7 svc  svc  4096 Jul  3 22:33 .
+393218 4 drwxr-xr-x 3 root root 4096 Dec 22  2022 ..
+407234 0 lrwxrwxrwx 1 root root    9 Feb 20 12:08 .bash_history -> /dev/null
+407225 4 -rw-r--r-- 1 svc  svc   220 Jan  6  2022 .bash_logout
+407224 4 -rw-r--r-- 1 svc  svc  3771 Jan  6  2022 .bashrc
+407239 4 drwx------ 2 svc  svc  4096 Feb 28 11:37 .cache
+393324 4 -rw-rw-r-- 1 svc  svc   135 Jul  3 21:10 .gitconfig
+401435 4 drwx------ 3 svc  svc  4096 Jul  3 21:00 .gnupg
+410850 4 drwxrwxr-x 5 svc  svc  4096 Jun 15  2022 .local
+397613 0 lrwxrwxrwx 1 root root    9 Apr  3 08:58 .mysql_history -> /dev/null
+407226 4 -rw-r--r-- 1 svc  svc   807 Jan  6  2022 .profile
+407235 0 lrwxrwxrwx 1 root root    9 Feb 20 14:08 .searchor-history.json -> /dev/null
+401430 4 drwx------ 3 svc  svc  4096 Jul  3 20:29 snap
+401437 4 drwx------ 2 svc  svc  4096 Jul  3 22:27 .ssh
+407253 4 -rw-r----- 1 root svc    33 Jul  3 20:24 user.txt
+svc@busqueda:~$ cat .gitconfig
+cat .gitconfig
+[user]
+        email = cody@searcher.htb
+        name = cody
+[core]
+        hooksPath = no-hooks
+[safe]
+        directory = /var/www/app
+        directory = /var/www/app
+svc@busqueda:~$ </span>
+</code></pre></div></div><br>
+
+<p class="plain-text">Encontramos el nombre de usuario "cody" y vamos a inspeccionar el directorio <code class="language-plaintext highlighter-rouge">/var/www/app</code></p>
+
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="p">10.10.0.164/key-1-of-3.txt </span><span class="ve">
@@ -314,6 +352,47 @@ robot@linux:~$ cat key-2-of-3.txt
 
 <section class="post" id="espriv">
 <br><h3 class="post-title">Escalada de privilegios</h3><br>
+
+
+
+
+
+
+
+
+svc@busqueda:~$ ls -lisa
+ls -lisa
+total 48
+407223 4 drwxr-x--- 7 svc  svc  4096 Jul  3 22:33 .
+393218 4 drwxr-xr-x 3 root root 4096 Dec 22  2022 ..
+407234 0 lrwxrwxrwx 1 root root    9 Feb 20 12:08 .bash_history -> /dev/null
+407225 4 -rw-r--r-- 1 svc  svc   220 Jan  6  2022 .bash_logout
+407224 4 -rw-r--r-- 1 svc  svc  3771 Jan  6  2022 .bashrc
+407239 4 drwx------ 2 svc  svc  4096 Feb 28 11:37 .cache
+393324 4 -rw-rw-r-- 1 svc  svc   135 Jul  3 21:10 .gitconfig
+401435 4 drwx------ 3 svc  svc  4096 Jul  3 21:00 .gnupg
+410850 4 drwxrwxr-x 5 svc  svc  4096 Jun 15  2022 .local
+397613 0 lrwxrwxrwx 1 root root    9 Apr  3 08:58 .mysql_history -> /dev/null
+407226 4 -rw-r--r-- 1 svc  svc   807 Jan  6  2022 .profile
+407235 0 lrwxrwxrwx 1 root root    9 Feb 20 14:08 .searchor-history.json -> /dev/null
+401430 4 drwx------ 3 svc  svc  4096 Jul  3 20:29 snap
+401437 4 drwx------ 2 svc  svc  4096 Jul  3 22:27 .ssh
+407253 4 -rw-r----- 1 root svc    33 Jul  3 20:24 user.txt
+svc@busqueda:~$ cat .gitconfig
+cat .gitconfig
+[user]
+        email = cody@searcher.htb
+        name = cody
+[core]
+        hooksPath = no-hooks
+[safe]
+        directory = /var/www/app
+        directory = /var/www/app
+svc@busqueda:~$ 
+
+
+
+
 
 <p class="plain-text">Después de un rato registrando diferentes directorios del sistema no hemos podido encontrar más pistas, así que vamos a intentar hacer una <code class="language-plaintext highlighter-rouge">escalada de privilegios</code> para ver si desde el usuario root podemos encontrar algo.
 Buscaremos todos los archivos que tengan el <code class="language-plaintext highlighter-rouge">bit SUID</code> activado, el bit de setuid, cuando se establece, permite que el archivo (usualmente un programa ejecutable) se ejecute con los permisos del propietario del archivo en lugar de los permisos del usuario que lo ejecuta. 
