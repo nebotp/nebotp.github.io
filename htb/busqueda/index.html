@@ -316,12 +316,24 @@ User svc may run the following commands on busqueda:
 <p class="plain-text">No somos capaces de leer el código del script así que vamos a ejecutarlo y ver que conclusiones podemos sacar:</p>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<span class="ve">svc@busqueda:/$ sudo /usr/bin/python3 /opt/scripts/system-checkup.py /etc/passwd</span>
+<code><span class="ve">svc@busqueda:/$ sudo /usr/bin/python3 /opt/scripts/system-checkup.py /etc/passwd</span>
 Usage: /opt/scripts/system-checkup.py action (arg1) (arg2)
 
 docker-ps     : List running docker containers
 docker-inspect : Inpect a certain docker container
 full-checkup  : Run a full system checkup
+
+<span class="ve">svc@busqueda:/$ sudo /usr/bin/python3 /opt/scripts/system-checkup.py docker-ps</span>
+CONTAINER ID   IMAGE                COMMAND                  CREATED        STATUS       PORTS                                             NAMES
+960873171e2e   gitea/gitea:latest   "/usr/bin/entrypoint…"   5 months ago   Up 5 hours   127.0.0.1:3000->3000/tcp, 127.0.0.1:222->22/tcp   gitea
+f84a6b33fb5a   mysql:8              "docker-entrypoint.s…"   5 months ago   Up 5 hours   127.0.0.1:3306->3306/tcp, 33060/tcp               mysql_db
+
+<span class="ve">svc@busqueda:/$ sudo /usr/bin/python3 /opt/scripts/system-checkup.py docker-inspect 960873171e2e gitea</span>
+960873171e2e
+
+<span class="ve">svc@busqueda:/$ sudo /usr/bin/python3 /opt/scripts/system-checkup.py full-checkup</span>
+Something went wrong
+
 
 </code></pre></div></div><br>
 
