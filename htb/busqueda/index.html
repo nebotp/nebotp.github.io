@@ -364,19 +364,15 @@ Something went wrong
 <p class="plain-text">¡Wow! Parece que ha funcionado y hemos accedido como administrador. Ahora tenemos acceso al código de los diferentes scripts anteriores para ver su funcionamiento.</p>
 <a href="/htb/busqueda/8.png" target="_blank"><div><p><img src="/htb/busqueda/8.png"></p></div></a>
 
+<p class="plain-text">Después de un rato mirando código encontramos algo interesante, dentro del script "system-checkup.py" podemos ver que intenta hacer al ser llamada y a que se debía el error que nos daba antes.
+Al llamarlo desde nuestro directorio home el script intentaba encontrar el archivo "full-checkup.sh" y al no hacerlo saltaba el "Something went wrong".</p>
+<a href="/htb/busqueda/9.png" target="_blank"><div><p><img src="/htb/busqueda/9.png"></p></div></a>
+<p class="plain-text"></p>
+
+
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-# ls
-key-2-of-3.txt  password.raw-md5
-# cd ..
-# ls
-robot
-# cd ..
-# cd root
-# ls
-firstboot_done  <span class="ve">key-3-of-3.txt</span>
-# cat key-3-of-3.txt
-<span class="ve">04787ddef27c3dee1ee161b21670b4e4</span>
+<span class="ve"></span>
 </code></pre></div></div><br>
 
 
