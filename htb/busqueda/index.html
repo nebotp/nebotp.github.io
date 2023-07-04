@@ -126,7 +126,6 @@
         <li><a href="#enumeration">Enumeración</a></li>
         <li><a href="#exp">Explotando la vulnerabilidad</a></li>
         <li><a href="#esc">Escalada de privilegios</a></li>
-        <li><a href="#espriv">Escalada de privilegios</a></li>
       </ul>
   </div>
 
@@ -314,10 +313,16 @@ User svc may run the following commands on busqueda:
 </span>
 </code></pre></div></div><br>
 
+<p class="plain-text">No somos capaces de leer el código del script así que vamos a ejecutarlo y ver que conclusiones podemos sacar:</p>
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-robot@linux:~$ /usr/local/bin/nmap --version
-<span class="ve">nmap version 3.81</span> ( http://www.insecure.org/nmap/ )
+<span class="ve">svc@busqueda:/$ sudo /usr/bin/python3 /opt/scripts/system-checkup.py /etc/passwd</span>
+Usage: /opt/scripts/system-checkup.py action (arg1) (arg2)
+
+docker-ps     : List running docker containers
+docker-inspect : Inpect a certain docker container
+full-checkup  : Run a full system checkup
+
 </code></pre></div></div><br>
 
 <p class="plain-text">Pretendemos spawnear una shell interactiva a través de la ejecución de nmap y al estar haciéndolo como root tomaremos su identidad dentro de la nueva shell.</p>
