@@ -284,11 +284,36 @@ svc@busqueda:/var/www/app/.git$
 <p class="plain-text">Accedemos a ella con las credenciales encontradas:</p>
 <a href="/htb/busqueda/4.png" target="_blank"><div><p><img src="/htb/busqueda/4.png"></p></div></a>
 
-<p class="plain-text">Es una web estilo GitHub en la que se pueden crear repositorios con código, encontramos el código de la web searcher.htb y podemos observar que hay un usuario administrador que es quién ha creado el repositorio.</p>
+<p class="plain-text">Es una web estilo GitHub en la que se pueden crear repositorios con código, encontramos el código de la web searcher.htb y podemos observar que hay un usuario administrador que es quién ha creado el repositorio pero nada más allá de esto...</p>
 <a href="/htb/busqueda/5.png" target="_blank"><div><p><img src="/htb/busqueda/5.png"></p></div></a>
 
+<p class="plain-text">Vamos a probar las credenciales en el servicio SSH encontrado anteriormente. </p>
 
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">└─$ ssh cody@searcher.htb</span>                     
+cody@searcher.htb's password: 
+Permission denied, please try again.<br>
+<code><span class="ve">└─$ ssh administrator@searcher.htb</span>
+administrator@searcher.htb's password: 
+Permission denied, please try again.<br>
+<code><span class="ve">└─$ ssh svc@searcher.htb</span>
+svc@searcher.htb's password:
+Welcome to Ubuntu 22.04.2 LTS (GNU/Linux 5.15.0-69-generic x86_64)    
+svc@busqueda:~$ 
+</span>
+</code></pre></div></div><br>
 
+<p class="plain-text">Una vez hemos conseguido acceder con el usuario "svc" vamos a ver que es lo que podemos ejecutar como root para seguir con la escalada de privilegios.</p>
+
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">svc@busqueda:/$ sudo -l</span>
+Matching Defaults entries for svc on busqueda:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin, use_pty
+    
+User svc may run the following commands on busqueda:
+    (root) /usr/bin/python3 /opt/scripts/system-checkup.py *
+</span>
+</code></pre></div></div><br>
 
 <p class="plain-text">Después de un rato registrando diferentes directorios del sistema no hemos podido encontrar más pistas, así que vamos a intentar hacer una <code class="language-plaintext highlighter-rouge">escalada de privilegios</code> para ver si desde el usuario root podemos encontrar algo.
 Buscaremos todos los archivos que tengan el <code class="language-plaintext highlighter-rouge">bit SUID</code> activado, el bit de setuid, cuando se establece, permite que el archivo (usualmente un programa ejecutable) se ejecute con los permisos del propietario del archivo en lugar de los permisos del usuario que lo ejecuta. 
