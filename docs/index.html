@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Markdown Viewer</title>
+	</head>
+	<body>
+		<div id="content">Cargando...</div>
+		<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+		<script>
+			fetch('README.md').then(response => response.text()).then(markdown => {
+				document.getElementById('content').innerHTML = marked.parse(markdown);
+			});
+		</script>
+	</body>
+</html>
