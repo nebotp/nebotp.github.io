@@ -5,3 +5,4 @@ markdown: kramdown
 kramdown:
   syntax_highlighter: rouge
 theme: jekyll-theme-slate     # o deja vacío si usas tu propio CSS
+{% include back_button.html %}
