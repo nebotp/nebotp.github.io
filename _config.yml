@@ -2,4 +2,6 @@ title: "Mi Web de Writeups"
 baseurl: ""       # si usas TU_REPO.github.io
 url: "https://nebotp.github.io/"
 markdown: kramdown
-theme: minima     # o deja vacío si usas tu propio CSS
+kramdown:
+  syntax_highlighter: rouge
+theme: jekyll-theme-slate     # o deja vacío si usas tu propio CSS
