@@ -4,6 +4,7 @@ title: "Bypassing 401: Manipulación de cabeceras"
 permalink: /bypassing-401.html
 ---
 
+{% include back_button.html %}
 ## Introducción 
 
 Encontrarse con códigos 403 Forbidden es común dentro de aplicaciones web, normalmente detrás de ellos podemos encontrar paneles administrativos, APIs internas o endpoints sensibles. Aunque puedan parecer un callejón sin salida, debido a malas configuraciones en servidores, proxies o sistemas de acceso de control a veces pueden surgir grietas en las defensas por las que colarse. En estos apuntes voy a describir como funciona este código, por qué sucede y diferentes técnicas que pueden superarlo para acceder a recursos restringidos durante las auditorías web. 
