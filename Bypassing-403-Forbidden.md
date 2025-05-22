@@ -84,7 +84,7 @@ Para saltarnos los 403 Forbidden u otros controles de acceso mal configurados lo
 ```markdown
 # Cabeceras usadas comúnmente para bypassear 403
 
-| Cabecera                   | Valor asignado             | Descripción                                        |
+| Cabecera                  | Valor asignado             | Descripción                                             |
 |---------------------------|----------------------------|---------------------------------------------------------|
 | X-Original-URL            | /admin                     | Access restricted paths via rewritten URLs              |
 | X-Rewrite-URL             | /admin                     | Similar to X-Original-URL; processed by some proxies    |
@@ -92,7 +92,7 @@ Para saltarnos los 403 Forbidden u otros controles de acceso mal configurados lo
 | X-Forwarded-For           | 127.0.0.1                  | Spoof client IP to appear as localhost                  |
 | X-Client-IP               | 127.0.0.1                  | Another way to impersonate internal IP                  |
 | X-Host                    | localhost                  | Manipulate host-based access controls                   |
-| Referer                   | http://websegura.com/    | Trick server into trusting the source of the request    |
+| Referer                   | http://websegura.com/      | Trick server into trusting the source of the request    |
 ```
 
 Usando las cabeceras X-Original-URL o X-Rewrite-URL podemos sobrescribir la ruta original solicitada, esto funciona especialmente bien en sistemas que usen NGINX como proxy inverso. Ejemplo:
@@ -130,7 +130,7 @@ curl -g --path-as-is "https://ejemplo.es/admin%2f"           # admin/
 curl -g --path-as-is "https://ejemplo.es/admin%252f"         # admin%2f (doble codificación)
 curl -g --path-as-is "https://ejemplo.es/admin%2e%2e%2f"     # admin../
 ```
-
+```markdown
 | Truco                        | Ejemplo                           | Objetivo                                          |
 | ---------------------------- | --------------------------------- | ------------------------------------------------- |
 | Añadir barra final           | `/admin/`                         | Bypass de filtros que esperan `/admin` exacto     |
@@ -143,6 +143,8 @@ curl -g --path-as-is "https://ejemplo.es/admin%2e%2e%2f"     # admin../
 | Punto y coma o espacio final | `/admin;`, `/admin%20`            | Confundir parsers o coincidencias demasiado laxas |
 | Secuencias Unicode           | `/admin%c0%af`, `/admin%ef%bc%8f` | Bypass con slash Unicode                          |
 | Parámetro o fragmento extra  | `/admin?foo=bar#`                 | Bypass de validación solo por path                |
+````
+
 ### Manipulación de mayúsculas
 ```bash
 curl https://ejemplo.es/admin
